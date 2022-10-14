@@ -3,7 +3,10 @@ defmodule Nqcc do
   Documentation for Nqcc.
   """
   @commands %{
-    "help" => "Prints this help"
+    "help" => "Prints this help",
+    "asm" => "Shows the assembly code",
+    "tl" => "Shows token list",
+    "aa" => "Shows AST Tree"
   }
 
   def main(args) do
@@ -14,10 +17,25 @@ defmodule Nqcc do
 
   def parse_args(args) do
     OptionParser.parse(args, switches: [help: :boolean])
+    OptionParser.parse(args, switches: [asm: :boolean])
+    OptionParser.parse(args, switches: [tl: :boolean])
+    OptionParser.parse(args, switches: [aa: :boolean])
   end
 
   defp process_args({[help: true], _, _}) do
     print_help_message()
+  end
+
+  defp process_args({[asm: true], _, _}) do
+    print_asm_message()
+  end
+
+  defp process_args({[tl: true], _, _}) do
+    print_tl_message()
+  end
+
+  defp process_args({[aa: true], _, _}) do
+    print_aa_message()
   end
 
   defp process_args({_, [file_name], _}) do
@@ -47,4 +65,24 @@ defmodule Nqcc do
     @commands
     |> Enum.map(fn {command, description} -> IO.puts("  #{command} - #{description}") end)
   end
+
+  defp print_asm_message do
+    IO.puts("\nnqcc --asm file_name \n")
+
+    IO.puts("\nThe compiler shows the assembly code\n")
+  end
+
+  defp print_tl_message do
+    IO.puts("\nnqcc --tl file_name \n")
+
+    IO.puts("\nThe compiler shows the token list\n")
+  end
+
+  defp print_aa_message do
+    IO.puts("\nnqcc --aa file_name \n")
+
+    IO.puts("\nThe compiler shows the AST Tree\n")
+  end
+
+
 end
