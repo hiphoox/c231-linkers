@@ -2,7 +2,7 @@
 
 **Compilers Project Elixir , Linkers Team**
 
-##Instalation
+## Instalation
 
 First you need the last version of elixir then you can follow the next instructions
 
@@ -10,7 +10,7 @@ First you need the last version of elixir then you can follow the next instructi
 2) cd c231-linkers (check the path where you clone the repository)
 3) mix escript.build
 
-##Usasge
+## Usasge
 
 You can use the following args to use the compiler
 
@@ -24,7 +24,7 @@ Flags
 --tl
 --aa
 
-#Examples
+## Examples
 
 To compile the .c file
 
