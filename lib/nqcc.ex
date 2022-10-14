@@ -42,6 +42,11 @@ defmodule Nqcc do
     compile_file(file_name)
   end
 
+  defp process_args({[tl: true], [file_name], _}) do
+    token_list_gen(file_name)
+  end
+
+
   defp compile_file(file_path) do
     IO.puts("Compiling file: " <> file_path)
     assembly_path = String.replace_trailing(file_path, ".c", ".s")
@@ -55,6 +60,13 @@ defmodule Nqcc do
     |> IO.inspect(label: "\nParser ouput")
     |> CodeGenerator.generate_code()
     |> Linker.generate_binary(assembly_path)
+  end
+
+  defp token_list_gen(file_path) do
+    IO.puts("Token List: " <> file_path)
+    File.read!(file_path)
+    |> Lexer.scan_words()
+    |> IO.inspect(label: "\nLexer ouput")
   end
 
   defp print_help_message do
