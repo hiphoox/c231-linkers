@@ -16,30 +16,36 @@ defmodule Nqcc do
   end
 
   def parse_args(args) do
-    OptionParser.parse(args, switches: [help: :boolean])
-    OptionParser.parse(args, switches: [asm: :boolean])
-    OptionParser.parse(args, switches: [tl: :boolean])
-    OptionParser.parse(args, switches: [aa: :boolean])
+    OptionParser.parse(args, switches: [help: :boolean,tl: :boolean,ast: :boolean, asm: :boolean])
+  end
+
+  defp process_args({[], [file_name], _}) do
+    compile_file(file_name)
   end
 
   defp process_args({[help: true], _, _}) do
     print_help_message()
   end
 
-  defp process_args({[asm: true], _, _}) do
-    print_asm_message()
-  end
 
   defp process_args({[tl: true], _, _}) do
-    print_tl_message()
+    IO.puts("Usage --tl (path)")
   end
 
-  defp process_args({[aa: true], _, _}) do
-    print_aa_message()
+  defp process_args({[asm: true], _, _}) do
+    IO.puts("Usage --asm (path)")
   end
 
-  defp process_args({_, [file_name], _}) do
-    compile_file(file_name)
+  defp process_args({[ast: true], _, _}) do
+    IO.puts("Usage --ast (path)")
+  end
+
+  defp process_args({[tl: true], [file_name], _}) do
+    token_list_gen(file_name)
+  end
+
+  defp process_args({[asm: true], [file_name], _}) do
+    asm_gen(file_name)
   end
 
   defp process_args({[ast: true], [file_name], _}) do
@@ -63,6 +69,37 @@ defmodule Nqcc do
     |> Linker.generate_binary(assembly_path)
   end
 
+  defp token_list_gen(file_path) do
+    IO.puts("Token List: " <> file_path)
+    File.read!(file_path)
+    |> Sanitizer.sanitize_source()
+    |> Lexer.scan_words()
+    |> IO.inspect(label: "\nLexer ouput (Token List)")
+  end
+
+  defp tree_gen(file_path) do
+    IO.puts("Tree AST: " <> file_path)
+    File.read!(file_path)
+    |> Sanitizer.sanitize_source()
+    |> Lexer.scan_words()
+    |> Parser.parse_program()
+    |> IO.inspect(label: "\nParser ouput (Tree AST)")
+  end
+
+
+  defp asm_gen(file_path) do
+    IO.puts("Assembler Code: " <> file_path)
+    File.read!(file_path)
+    |> Sanitizer.sanitize_source()
+    |> Lexer.scan_words()
+    |> Parser.parse_program()
+    |> CodeGenerator.generate_code()
+  end
+
+
+
+
+
   defp print_help_message do
     IO.puts("\nnqcc --help file_name \n")
 
@@ -72,23 +109,7 @@ defmodule Nqcc do
     |> Enum.map(fn {command, description} -> IO.puts("  #{command} - #{description}") end)
   end
 
-  defp print_asm_message do
-    IO.puts("\nnqcc --asm file_name \n")
 
-    IO.puts("\nThe compiler shows the assembly code\n")
-  end
-
-  defp print_tl_message do
-    IO.puts("\nnqcc --tl file_name \n")
-
-    IO.puts("\nThe compiler shows the token list\n")
-  end
-
-  defp print_aa_message do
-    IO.puts("\nnqcc --aa file_name \n")
-
-    IO.puts("\nThe compiler shows the AST Tree\n")
-  end
 
 
 end
