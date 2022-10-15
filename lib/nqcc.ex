@@ -16,14 +16,8 @@ defmodule Nqcc do
   end
 
   def parse_args(args) do
-    OptionParser.parse(args, switches: [help: :boolean])
-    OptionParser.parse(args, switches: [asm: :boolean])
-    OptionParser.parse(args, switches: [tl: :boolean])
-    OptionParser.parse(args, switches: [ast: :boolean])
+    OptionParser.parse(args, switches: [help: :boolean,tk: :boolean,ast: :boolean, gc: :boolean])
   end
-
-
-
 
 
   defp process_args({[help: true], _, _}) do
@@ -34,12 +28,14 @@ defmodule Nqcc do
     compile_file(file_name)
   end
 
-  defp process_args({[asm: true], [file_name], _}) do
-    asm_gen(file_name)
-  end
+
 
   defp process_args({[tl: true], [file_name], _}) do
     token_list_gen(file_name)
+  end
+
+  defp process_args({[asm: true], [file_name], _}) do
+    asm_gen(file_name)
   end
 
   defp process_args({[ast: true], [file_name], _}) do
@@ -66,20 +62,14 @@ defmodule Nqcc do
   end
 
   defp token_list_gen(file_path) do
-    doc = File.read!(file_path)
-    tokenslist = Lexer.scan_words()
+    IO.puts("\nTOKEN LIST GEN CORRECTO")
   end
 
-  defp asm_gen(file_path) do
+  #defp asm_gen(file_path) do
+  #end
 
-
-
-  end
-
-  defp tree_gen(file_path) do
-
-
-  end
+  #defp tree_gen(file_path) do
+  #end
 
 
 
