@@ -16,19 +16,29 @@ defmodule Nqcc do
   end
 
   def parse_args(args) do
-    OptionParser.parse(args, switches: [help: :boolean,tk: :boolean,ast: :boolean, gc: :boolean])
+    OptionParser.parse(args, switches: [help: :boolean,tl: :boolean,ast: :boolean, asm: :boolean])
   end
 
+  defp process_args({[], [file_name], _}) do
+    compile_file(file_name)
+  end
 
   defp process_args({[help: true], _, _}) do
     print_help_message()
   end
 
-  defp process_args({_, [file_name], _}) do
-    compile_file(file_name)
+
+  defp process_args({[tl: true], _, _}) do
+    IO.puts("Usage --tl (path)")
   end
 
+  defp process_args({[asm: true], _, _}) do
+    IO.puts("Usage --asm (path)")
+  end
 
+  defp process_args({[ast: true], _, _}) do
+    IO.puts("Usage --ast (path)")
+  end
 
   defp process_args({[tl: true], [file_name], _}) do
     token_list_gen(file_name)
@@ -41,8 +51,6 @@ defmodule Nqcc do
   defp process_args({[ast: true], [file_name], _}) do
     tree_gen(file_name)
   end
-
-
 
 
 
@@ -62,15 +70,31 @@ defmodule Nqcc do
   end
 
   defp token_list_gen(file_path) do
-    IO.puts("\nTOKEN LIST GEN CORRECTO")
+    IO.puts("Token List: " <> file_path)
+    File.read!(file_path)
+    |> Sanitizer.sanitize_source()
+    |> Lexer.scan_words()
+    |> IO.inspect(label: "\nLexer ouput (Token List)")
   end
 
-  #defp asm_gen(file_path) do
-  #end
+  defp tree_gen(file_path) do
+    IO.puts("Tree AST: " <> file_path)
+    File.read!(file_path)
+    |> Sanitizer.sanitize_source()
+    |> Lexer.scan_words()
+    |> Parser.parse_program()
+    |> IO.inspect(label: "\nParser ouput (Tree AST)")
+  end
 
-  #defp tree_gen(file_path) do
-  #end
 
+  defp asm_gen(file_path) do
+    IO.puts("Assembler Code: " <> file_path)
+    File.read!(file_path)
+    |> Sanitizer.sanitize_source()
+    |> Lexer.scan_words()
+    |> Parser.parse_program()
+    |> CodeGenerator.generate_code()
+  end
 
 
 
