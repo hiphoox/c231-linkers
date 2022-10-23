@@ -1,88 +1,101 @@
 defmodule Parser do
   def parse_program(token_list) do
-    function = parse_function(token_list)
-
+    function = parse_function(token_list,0)
     case function do
-      {{:error, error_message}, _rest} ->
-        {:error, error_message}
+      {{:error,error_message,linea,problema}, _rest} ->
+        {:error, error_message, linea,problema}
 
       {function_node, rest} ->
         if rest == [] do
           %AST{node_name: :program, left_node: function_node}
         else
-          {:error, "Error: there are more elements after function end"}
+          {:error, "Error: there are more elements after function end",0,"more elements"}
         end
     end
   end
 
-  def parse_function([next_token | rest]) do
-    if next_token == :int_keyword do
-      [next_token | rest] = rest
-
-      if next_token == :main_keyword do
-        [next_token | rest] = rest
-
-        if next_token == :open_paren do
-          [next_token | rest] = rest
-
-          if next_token == :close_paren do
-            [next_token | rest] = rest
-
-            if next_token == :open_brace do
-              statement = parse_statement(rest)
-
-              case statement do
-                {{:error, error_message}, rest} ->
-                  {{:error, error_message}, rest}
-
-                {statement_node, [next_token | rest]} ->
-                  if next_token == :close_brace do
-                    {%AST{node_name: :function, value: :main, left_node: statement_node}, rest}
-                  else
-                    {{:error, "Error, close brace missed"}, rest}
-                  end
-              end
-            else
-              {:error, "Error: open brace missed"}
-            end
+  def parse_function([{next_token,numline} | rest],contador) do
+    if rest != [] do
+      case contador do
+        0->
+          if next_token == :int_keyword do
+            contador=contador+1
+            parse_function(rest,contador)
           else
-            {:error, "Error: close parentesis missed"}
+            {{:error, "Error 1",numline,next_token},rest}
           end
-        else
-          {:error, "Error: open parentesis missed"}
+        1->
+          if next_token == :main_keyword do
+            contador=contador+1
+            parse_function(rest,contador)
+          else
+            {{:error, "Error, 2",numline,next_token},rest}
+          end
+        2->
+          if next_token == :open_paren do
+            contador=contador+1
+            parse_function(rest,contador)
+          else
+            {{:error, "Error, 3 ",numline,next_token},rest}
+          end
+        3->
+          if next_token == :close_paren do
+            contador=contador+1
+            parse_function(rest,contador)
+          else
+            {{:error, "Error, 4 ",numline,next_token},rest}
+          end
+        4->
+          if next_token == :open_brace do
+            statement = parse_statement(rest)
+            case statement do
+              {{:error, error_message,numline,next_token}, rest} ->
+                {{:error, error_message,numline,next_token}, rest}
+
+              {statement_node,lista_rest} ->
+                [{next_token,numline}|rest]=lista_rest
+                if next_token == :close_brace do
+                  {%AST{node_name: :function, value: :main, left_node: statement_node}, rest}
+                else
+                  {{:error, "Error 5",numline,next_token}, rest}
+                end
+            end
+          end
         end
       else
-        {:error, "Error: main functionb missed"}
+        {{:error, "Error, 6",numline,next_token}, []}
       end
-    else
-      {:error, "Error, return type value missed"}
-    end
   end
 
-  def parse_statement([next_token | rest]) do
+
+  def parse_statement([{next_token,numline} | rest]) do
     if next_token == :return_keyword do
       expression = parse_expression(rest)
 
       case expression do
-        {{:error, error_message}, rest} ->
-          {{:error, error_message}, rest}
+        {{:error, error_message, numline,next_token}, rest} ->
+          {{:error, error_message, numline,next_token}, rest}
 
-        {exp_node, [next_token | rest]} ->
+        {exp_node, [{next_token,numline}| rest]} ->
           if next_token == :semicolon do
             {%AST{node_name: :return, left_node: exp_node}, rest}
           else
-            {{:error, "Error: semicolon missed after constant to finish return statement"}, rest}
+            {{:error, "Error: semicolon missed after constant to finish return statement",numline,next_token}, rest}
           end
       end
     else
-      {{:error, "Error: return keyword missed"}, rest}
+      {{:error, "Error: return keyword missed",numline,next_token}, rest}
     end
   end
 
-  def parse_expression([next_token | rest]) do
+    #se agregaron nuevas lineas
+
+    def parse_expression([{next_token,numline} | rest]) do
     case next_token do
       {:constant, value} -> {%AST{node_name: :constant, value: value}, rest}
-      _ -> {{:error, "Error: constant value missed"}, rest}
+      _ -> {{:error, "Error: constant value missed",numline,next_token}, rest}
     end
   end
+
+ 
 end
