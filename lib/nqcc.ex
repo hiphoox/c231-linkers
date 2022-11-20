@@ -18,23 +18,9 @@ defmodule Nqcc do
   def parse_args(args) do
     OptionParser.parse(args, switches: [help: :boolean,t: :boolean,a: :boolean,s: :boolean,o: :boolean])
   end
-    defp process_args({[], [file_name], _}) do
+
+  defp process_args({[], [file_name], _}) do
     compile_file(file_name)
-  end
-  defp process_args({[help: true], _, _}) do
-    print_help_message()
-  end
-
-   defp process_args({[tl: true], _, _}) do
-    IO.puts("Usage --tl (path)")
-  end
-
-  defp process_args({[asm: true], _, _}) do
-    IO.puts("Usage --asm (path)")
-  end
-
-  defp process_args({[ast: true], _, _}) do
-    IO.puts("Usage --ast (path)")
   end
 
   defp process_args({[tl: true], [file_name], _}) do
@@ -51,6 +37,22 @@ defmodule Nqcc do
 
   defp process_args({_, [file_name], _}) do
     compile_file(file_name)
+  end
+
+  defp process_args({[help: true], _, _}) do
+    print_help_message()
+  end
+
+  defp process_args({[tl: true], _, _}) do
+    IO.puts("Usage (path) --tl")
+  end
+
+  defp process_args({[asm: true], _, _}) do
+    IO.puts("Usage (path) --asm")
+  end
+
+  defp process_args({[ast: true], _, _}) do
+    IO.puts("Usage (path) --ast")
   end
 
  defp compile_file(file_path) do
@@ -81,7 +83,7 @@ defmodule Nqcc do
       IO.puts("Error lexico:")
       [_,palabra,linea_numero]=evaluar
       linea=to_string(linea_numero+1)
-      mensaje_error="La  "<>palabra<>" es noT esperada  en linea: "<>linea
+      mensaje_error="La ("<>palabra<>") es no esperada en linea: "<>linea
       IO.inspect(mensaje_error)
     end
 end
@@ -95,7 +97,7 @@ defp token_list_gen(file_path) do
     |> IO.inspect(label: "\nLexer ouput (Token List)")
   end
 
- 
+
  defp tree_gen(file_path) do
     IO.puts("Tree AST: " <> file_path)
     File.read!(file_path)
@@ -114,7 +116,7 @@ defp token_list_gen(file_path) do
     |> CodeGenerator.generate_code()
   end
 
-  
+
 
   defp print_help_message do
     IO.puts("\nnqcc --help file_name \n")

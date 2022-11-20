@@ -1,15 +1,15 @@
 defmodule CodeGenerator do
   def generate_code(ast) do
-    post_order(ast)
+    code = post_order(ast)
+    #IO.puts("\nCode Generator output:")
+    #IO.puts(code)
+    code
   end
 
   def post_order(node) do
-  #  IO.puts("batman")
-  #  IO.inspect(node)
     case node do
       nil ->
         nil
-
 
       ast_node ->
         code_snippet = post_order(ast_node.left_node)
@@ -21,48 +21,29 @@ defmodule CodeGenerator do
 
   def emit_code(:program, code_snippet, _) do
     """
-	       .globl	main
+        .section	.text.startup,"ax",@progbits
+        .p2align 4
     """ <>
       code_snippet
   end
 
   def emit_code(:function, code_snippet, :main) do
     """
+        .globl  main
     main:
     """ <>
       code_snippet
   end
 
   def emit_code(:return, code_snippet, _) do
-    code_snippet<>
     """
+        endbr64
+        movl    #{code_snippet}, %eax
         ret
-    """
-  end
-  def emit_code(:unary_negative, code_snippet, _) do
-    code_snippet<>
-    """
-        neg	%eax
-    """
-  end
-  def emit_code(:unary_complement, code_snippet, _) do
-    code_snippet<>
-    """
-        not	%eax
-    """
-  end
-  def emit_code(:negative_logical, code_snippet, _) do
-    code_snippet<>
-    """
-    cmpl     $0, %eax
-    movl     $0, %eax
-    sete     %al
     """
   end
 
   def emit_code(:constant, _code_snippet, value) do
-    """
-        movl	$#{value}, %eax
-    """
+    "$#{value}"
   end
 end
