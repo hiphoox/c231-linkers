@@ -21,12 +21,12 @@ Flags
 ./nqcc --help
 ./nqcc --<flag> (path of the .c)
 
-git clone https://github.com/hiphoox/c231-linkers
-cd c231-linkers (check the path where you clone the repository)
-mix escript.build
 --asm :Shows file assembler
+
 --tl  :Shows token List
+
 --ast :Shows AST tree
+  
 --o   :Change the name of the executable
 
 ## Examples
