@@ -14,25 +14,25 @@ First you need the last version of elixir then you can follow the next instructi
 
 You can use the following args to use the compiler
 
-./nqcc (path of the .c)
+`./nqcc (path of the .c)`
 
->Flags
+**Flags**
 
 `./nqcc --help`  
 `./nqcc --<flag> (path of the .c)`
 
---asm :Shows file assembler  
---tl \ :Shows token List  
---ast :Shows AST tree  
---o   :Change the name of the executable
+`--asm` :Shows file assembler  
+`--tl` :Shows token List  
+`--ast` :Shows AST tree  
+`--o ` :Change      the name of the executable
 
 ## Examples
 
 To compile the .c file
 
-./nqcc ./examples/return2.c
+`./nqcc ./examples/return2.c`
 
 To use flags
 
-./nqcc --help
+`./nqcc --help`
   
