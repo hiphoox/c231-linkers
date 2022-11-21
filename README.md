@@ -38,3 +38,4 @@ To compile the .c file
 To use flags
 
 ./nqcc --help
+  
