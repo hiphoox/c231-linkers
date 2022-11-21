@@ -21,10 +21,10 @@ Flags
 ./nqcc --help
 ./nqcc --<flag> (path of the .c)
 
-asm :Shows file assembler
-tl  :Shows token List
-ast :Shows AST tree
-o   :Change the name of the executable
+--asm :Shows file assembler
+--tl  :Shows token List
+--ast :Shows AST tree
+--o   :Change the name of the executable
 
 ## Examples
 
