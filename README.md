@@ -22,9 +22,9 @@ You can use the following args to use the compiler
 `./nqcc --<flag> (path of the .c)`
 
 `--asm` :Shows file assembler  
-`--tl` :Shows token List  
+`--tl`  :Shows token List  
 `--ast` :Shows AST tree  
-`--o ` :Change      the name of the executable
+`--o `  :Change the name of the executable
 
 ## Examples
 
