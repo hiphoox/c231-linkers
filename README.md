@@ -18,8 +18,8 @@ You can use the following args to use the compiler
 
 >Flags
 
-./nqcc --help  
-./nqcc --<flag> (path of the .c)
+`./nqcc --help`  
+`./nqcc --<flag> (path of the .c)`
 
 --asm :Shows file assembler  
 --tl \ :Shows token List  
