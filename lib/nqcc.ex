@@ -61,8 +61,9 @@ defmodule Nqcc do
     lista_tokens=File.read!(file_path)
     |> Sanitizer.sanitize_source()
     |> Lexer.scan_words()
-    evaluar=Evaluator.evaluator_lexer(lista_tokens)
-    if evaluar==[] do
+
+    evaluar = Evaluator.evaluator_lexer(lista_tokens)
+    if evaluar == :ok do
       arbolAST=lista_tokens
       |> Parser.parse_program()
       if is_map(arbolAST) do
@@ -73,18 +74,12 @@ defmodule Nqcc do
       end
       if is_tuple(arbolAST) do
         IO.puts("ERROR SINTACTICO")
-        {_,_,linea_numero,problema_atomo}=arbolAST
-        linea=to_string(linea_numero+1)
-        problema=to_string(problema_atomo)
-        mensaje_error="Errror en linea:  "<>linea<>", Cerca de: "<>problema
-        IO.inspect(mensaje_error)
+        {:error,msj,num_line,problema_atomo}=arbolAST
+        line = to_string(num_line)
+        problema = to_string(problema_atomo)
+        msj_error="Errror en linea (#{line}): #{msj}. Cerca de: #{problema}"
+        IO.inspect(msj_error)
       end
-    else
-      IO.puts("Error lexico:")
-      [_,palabra,linea_numero]=evaluar
-      linea=to_string(linea_numero+1)
-      mensaje_error="La ("<>palabra<>") es no esperada en linea: "<>linea
-      IO.inspect(mensaje_error)
     end
 end
 

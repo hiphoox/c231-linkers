@@ -19,7 +19,7 @@ You can use the following args to use the compiler
 **Flags**
 
 `./nqcc --help`  
-`./nqcc --<flag> (path of the .c)`
+`./nqcc (path of the .c) --<flag>`
 
 `--asm` :Shows file assembler  
 `--tl`  :Shows token List  

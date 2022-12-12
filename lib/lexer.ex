@@ -11,7 +11,7 @@ defmodule Lexer do
         {{{:constant, String.to_integer(value)},linea}, String.trim_leading(program, value)}
       end
     else
-      {["Token not valid",program,linea],:error}
+      {:error,{"Token not valid: #{program}",linea}}
     end
   end
 
@@ -35,26 +35,36 @@ defmodule Lexer do
           {{:semicolon, code_line}, rest}
 
         "return" <> rest ->
-          {{:return_keyword, code_line}, rest}
+          if String.first(rest) in ["{","}","(",")",";",nil] do
+            {{:return_keyword, code_line}, rest}
+          else
+            {:error,{"Token not valid: #{program}",linea}}
+          end
 
         "int" <> rest ->
-          {{:int_keyword, code_line}, rest}
+          if String.first(rest) in ["{","}","(",")",";",nil] do
+            {{:int_keyword, code_line}, rest}
+          else
+            {:error,{"Token not valid: #{program}",linea}}
+          end
 
         "main" <> rest ->
+        if String.first(rest) in ["{","}","(",")",";",nil] do
           {{:main_keyword, code_line}, rest}
+        else
+          {:error,{"Token not valid: #{program}",linea}}
+        end
 
         rest ->
           get_constant(rest,linea)
       end
 
-    if rest != :error do
+    if token != :error do
       auxiliar_token={rest,linea}
       remaining_tokens=lex_raw_tokens(auxiliar_token)
       [token | remaining_tokens]
     else
-      remaining_tokens=lex_raw_tokens(rest)
-    [token | remaining_tokens]
-    #  [{:error}]
+      [{:error, rest}]
     end
   end
 
