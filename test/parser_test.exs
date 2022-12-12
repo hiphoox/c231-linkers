@@ -130,8 +130,14 @@ defmodule ParserTest do
       right_node: nil,
       value: nil
     },
-    tupla_error1: {:error, "Error, return type value missed", 1, :main_keyword},
-    tupla_error2: {:error, "File without elements",0,"more elements"}
+    tupla_error1: {:error, "Error, return type value missed", 1,:main_keyword},
+    tupla_error2: {:error, "File without elements",0,"more elements"},
+    tupla_error3: {:error, "Error: semicolon missed after constant to finish return statement",
+                            2,:close_brace},
+    tupla_error4: {:error, "Error: main function missed",1,:return_keyword},
+    tupla_error5: {:error, "Error: open parentesis missed",1,:close_paren},
+    tupla_error6: {:error, "Error: close parentesis missed", 2, {:constant, 2}},
+    tupla_error7: {:error, "Error: there are more elements after function end",0,"more elements"}
   }
   end
 
@@ -263,5 +269,57 @@ test "lista de tokens vacia", state do
   s_code = Sanitizer.sanitize_source(code)
   assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error2]
 end
+
+  test "sin punto y coma", state do
+    code = """
+    int main() {
+      return 2}
+    """
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error3]
+  end
+  
+  test "tokens en desorden", state do
+     code = """
+     int return main () {
+      return 2; ()
+      5 98 int main {}
+      return ( 2 )
+    }
+    """
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error4]
+   end
+   
+     test "sin ( ", state do
+    code = """
+      int main) {
+      return 2;}
+    """
+    
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error5]
+  end
+  
+  test "Ausencia de tokens", state do
+    code = """
+      int main( 
+         2;
+    }
+    """
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error6]
+  end
+  
+    test "Token fuera de rango", state do
+    code = """
+      int main(){ 
+      return  2;
+    } main
+    """
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error7]
+  end
+
 
  end
