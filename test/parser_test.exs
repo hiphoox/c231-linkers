@@ -4,136 +4,135 @@ defmodule ParserTest do
 
   setup_all do
     {:ok,
-     arbol: %AST{
-  left_node: %AST{
-    left_node: %AST{
+    arbol: %AST{
       left_node: %AST{
-        left_node: nil,
-        node_name: :constant,
+        left_node: %AST{
+          left_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 2
+          },
+          node_name: :return,
+          right_node: nil,
+          value: nil
+        },
+        node_name: :function,
         right_node: nil,
-        value: 2
+        value: :main
       },
-      node_name: :return,
+      node_name: :program,
       right_node: nil,
       value: nil
     },
-    node_name: :function,
-    right_node: nil,
-    value: :main
-  },
-  node_name: :program,
-  right_node: nil,
-  value: nil
-},
-arbol0: %AST{
-  left_node: %AST{
-    left_node: %AST{
+    arbol0: %AST{
       left_node: %AST{
-        left_node: nil,
-        node_name: :constant,
+        left_node: %AST{
+          left_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 2
+          },
+          node_name: :return,
+          right_node: nil,
+          value: nil
+        },
+        node_name: :function,
         right_node: nil,
-        value: 2
+        value: :main
       },
-      node_name: :return,
+      node_name: :program,
       right_node: nil,
       value: nil
     },
-    node_name: :function,
-    right_node: nil,
-    value: :main
-  },
-  node_name: :program,
-  right_node: nil,
-  value: nil
-},
-arbol1: %AST{
-  left_node: %AST{
-    left_node: %AST{
+    arbol1: %AST{
       left_node: %AST{
-        left_node: nil,
-        node_name: :constant,
+        left_node: %AST{
+          left_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 0
+          },
+          node_name: :return,
+          right_node: nil,
+          value: nil
+        },
+        node_name: :function,
         right_node: nil,
-        value: 0
+        value: :main
       },
-      node_name: :return,
+      node_name: :program,
       right_node: nil,
       value: nil
     },
-    node_name: :function,
-    right_node: nil,
-    value: :main
-  },
-  node_name: :program,
-  right_node: nil,
-  value: nil
-},
-arbol2: %AST{
-  left_node: %AST{
-    left_node: %AST{
+    arbol2: %AST{
       left_node: %AST{
-        left_node: nil,
-        node_name: :constant,
+        left_node: %AST{
+          left_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 100
+          },
+          node_name: :return,
+          right_node: nil,
+          value: nil
+        },
+        node_name: :function,
         right_node: nil,
-        value: 100
+        value: :main
       },
-      node_name: :return,
+      node_name: :program,
       right_node: nil,
       value: nil
     },
-    node_name: :function,
-    right_node: nil,
-    value: :main
-  },
-  node_name: :program,
-  right_node: nil,
-  value: nil
-},
-arbol3: %AST{
-  left_node: %AST{
-    left_node: %AST{
+    arbol3: %AST{
       left_node: %AST{
-        left_node: nil,
-        node_name: :constant,
+        left_node: %AST{
+          left_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 0002
+          },
+          node_name: :return,
+          right_node: nil,
+          value: nil
+        },
+        node_name: :function,
         right_node: nil,
-        value: 0002
+        value: :main
       },
-      node_name: :return,
+      node_name: :program,
       right_node: nil,
       value: nil
     },
-    node_name: :function,
-    right_node: nil,
-    value: :main
-  },
-  node_name: :program,
-  right_node: nil,
-  value: nil
-},
-arbol4: %AST{
-  left_node: %AST{
-    left_node: %AST{
+    arbol4: %AST{
       left_node: %AST{
-        left_node: nil,
-        node_name: :constant,
+        left_node: %AST{
+          left_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 000
+          },
+          node_name: :return,
+          right_node: nil,
+          value: nil
+        },
+        node_name: :function,
         right_node: nil,
-        value: 000
+        value: :main
       },
-      node_name: :return,
+      node_name: :program,
       right_node: nil,
       value: nil
     },
-    node_name: :function,
-    right_node: nil,
-    value: :main
-  },
-  node_name: :program,
-  right_node: nil,
-  value: nil
-},
-tupla_error1: {:error, "Error, return type value missed", 1, :main_keyword}
-
-#---------------------
-    }
+    tupla_error1: {:error, "Error, return type value missed", 1, :main_keyword},
+    tupla_error2: {:error, "File without elements",0,"more elements"}
+  }
   end
 
 test "return 2", state do
@@ -262,8 +261,7 @@ test "lista de tokens vacia", state do
   code = """
   """
   s_code = Sanitizer.sanitize_source(code)
-  assert Lexer.scan_words(s_code) |> Parser.parse_program() ==
-    {:error, "File without elements",0,"more elements"}
+  assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error2]
 end
 
  end
