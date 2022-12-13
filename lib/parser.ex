@@ -88,8 +88,8 @@ defmodule Parser do
           if next_token == :semicolon do
             {%AST{node_name: :return, left_node: exp_node}, rest}
           else
-            {{:error,"Error: semicolon missed after constant to finish return
-                      statement",numline,next_token}, rest}
+            {{:error,"Error: semicolon missed after constant to finish return statement",
+                      numline,next_token}, rest}
           end
       end
     else

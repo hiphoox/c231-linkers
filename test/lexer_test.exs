@@ -68,6 +68,42 @@ defmodule LexerTest do
       {:semicolon, 3},
       {:error, {"Token not valid: g", 3}},
       {:close_brace, 4}
+    ],
+    tokens6: [ #Varios tokens en desorden
+      {:int_keyword, 1},
+      {:return_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:semicolon, 2},
+      {:open_paren, 2},
+      {:close_paren, 2},
+      {{:constant, 5}, 3},
+      {{:constant, 98}, 3},
+      {:int_keyword, 3},
+      {:main_keyword, 3},
+      {:open_brace, 3},
+      {:close_brace, 3},
+      {:return_keyword, 4},
+      {:open_paren, 4},
+      {{:constant, 2}, 4},
+      {:close_paren, 4},
+      {:close_brace, 5}
+    ],
+    tokens7: [ #Varios token 2
+      {:error, {"Token not valid: in", 1}},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:error, {"Token not valid: return2;", 2}},
+      {:error, {"Token not valid: integer", 3}},
+      {:semicolon, 3},
+      {:error, {"Token not valid: g", 3}},
+      {:close_brace, 4}
     ]
     }
   end
@@ -165,7 +201,7 @@ defmodule LexerTest do
      {"return",1}, {"2",1}, {";",1}, {"}",1}]) == state[:tokens2]
   end
 
-  # Agregados Parte 1
+  # ------- Agregados Parte 1 -------
   test "separados", state do
     assert Lexer.scan_words([{"int",1}, {"main",1}, {"(){",1}, {"return",1},
       {"2",1}, {";}",1}]) == state[:tokens2]
@@ -346,6 +382,20 @@ defmodule LexerTest do
 
     assert Lexer.scan_words(s_code) == state[:tokens5]
   end
+
+  test "tokens en desorden", state do
+    code = """
+    int return main () {
+      return 2; ()
+      5 98 int main {}
+      return ( 2 )
+    }
+    """
+    s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens6]
+  end
+
 
   #------ Pruebas parte 2 -------
 

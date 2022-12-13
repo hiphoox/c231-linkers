@@ -137,7 +137,12 @@ defmodule ParserTest do
     tupla_error4: {:error, "Error: main function missed",1,:return_keyword},
     tupla_error5: {:error, "Error: open parentesis missed",1,:close_paren},
     tupla_error6: {:error, "Error: close parentesis missed", 2, {:constant, 2}},
-    tupla_error7: {:error, "Error: there are more elements after function end",0,"more elements"}
+    tupla_error7: {:error, "Error: there are more elements after function end",0,"more elements"},
+    tupla_error8: {:error, "Error: incomplete program", 1, :open_brace},
+    tupla_error9: {:error, "Error: open brace missed", 2, :return_keyword},
+    tupla_error10: {:error, "Error: close brace missed",1,:open_brace},
+    tupla_error11: {:error, "Error: return keyword missed", 2, {:constant, 2}},
+    tupla_error12: {:error, "Error: constant value missed", 2, :semicolon}
   }
   end
 
@@ -199,7 +204,7 @@ test "return 0", state do
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol]
   end
 
-    test "spaces", state do
+   test "spaces", state do
     code = """
     int   main    (  )  {   return  2 ; }
     """
@@ -213,11 +218,11 @@ test "return 0", state do
     state[:arbol]
   end
 
-    test "function name separated of function body", state do
+  test "function name separated of function body", state do
     assert Lexer.scan_words([{"int",0}, {"main()",0}, {"{return",0}, {"2;}",0}]) |> Parser.parse_program() == state[:arbol]
   end
 
-    test "everything is separated", state do
+  test "everything is separated", state do
     assert Lexer.scan_words([{"int",0}, {"main",0}, {"(",0}, {")",0}, {"{",0}, {"return",0}, {"2",0}, {";",0}, {"}",0}]) |> Parser.parse_program() ==
              state[:arbol]
   end
@@ -227,7 +232,7 @@ test "return 0", state do
              state[:arbol]
   end
 
-    test "ceros izquierda", state do
+  test "ceros izquierda", state do
     code = """
       int main() {
         return 0002;
@@ -252,23 +257,22 @@ test "return 0", state do
 #-----------------------------------
 
 
-test "sin int", state do
-  code = """
-    main main() {
-      return 2;
-  }
-  """
-  s_code = Sanitizer.sanitize_source(code)
-  assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error1]
+  test "sin int", state do
+    code = """
+      main main() {
+        return 2;
+    }
+    """
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error1]
+  end
 
-end
-
-test "lista de tokens vacia", state do
-  code = """
-  """
-  s_code = Sanitizer.sanitize_source(code)
-  assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error2]
-end
+  test "lista de tokens vacia", state do
+    code = """
+    """
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error2]
+  end
 
   test "sin punto y coma", state do
     code = """
@@ -278,7 +282,7 @@ end
     s_code = Sanitizer.sanitize_source(code)
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error3]
   end
-  
+
   test "tokens en desorden", state do
      code = """
      int return main () {
@@ -290,30 +294,30 @@ end
     s_code = Sanitizer.sanitize_source(code)
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error4]
    end
-   
+
      test "sin ( ", state do
     code = """
       int main) {
       return 2;}
     """
-    
+
     s_code = Sanitizer.sanitize_source(code)
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error5]
   end
-  
+
   test "Ausencia de tokens", state do
     code = """
-      int main( 
+      int main(
          2;
     }
     """
     s_code = Sanitizer.sanitize_source(code)
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error6]
   end
-  
+
     test "Token fuera de rango", state do
     code = """
-      int main(){ 
+      int main(){
       return  2;
     } main
     """
@@ -321,5 +325,49 @@ end
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error7]
   end
 
+  test "incompleto", state do
+    code = """
+      int main(){
+    """
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error8]
+  end
+
+  test "sin {", state do
+    code = """
+    int main()
+    return  2;
+  }
+  """
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error9]
+  end
+
+  test "sin }", state do
+    code = """
+    int main(){
+    return  2;
+  """
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error10]
+  end
+
+  test "sin return", state do
+    code = """
+    int main(){
+    2;}
+  """
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error11]
+  end
+
+  test "sin constante", state do
+    code = """
+    int main(){
+    return  ;}
+  """
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error12]
+  end
 
  end

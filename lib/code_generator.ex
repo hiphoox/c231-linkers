@@ -40,6 +40,8 @@ defmodule CodeGenerator do
         endbr64
         movl    #{code_snippet}, %eax
         ret
+        .section	.note.GNU-stack,"",@progbits
+
     """
   end
 
