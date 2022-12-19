@@ -10,19 +10,19 @@ defmodule GeneratorTest do
         .globl  main
     main:
         endbr64
-        movl    $2, %eax
+        movl  $2, %eax
         ret
         .section	.note.GNU-stack,"",@progbits
 
     """,
     codigo1: """
         .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl    $100, %eax\n    ret\n    .section	.note.GNU-stack,"",@progbits
+    main:\n    endbr64\n    movl  $100, %eax\n    ret\n    .section	.note.GNU-stack,"",@progbits
 
     """,
     codigo2: """
         .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl    $0, %eax\n    ret\n    .section	.note.GNU-stack,"",@progbits
+    main:\n    endbr64\n    movl  $0, %eax\n    ret\n    .section	.note.GNU-stack,"",@progbits
 
     """
     }

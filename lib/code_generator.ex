@@ -68,7 +68,7 @@ defmodule CodeGenerator do
 
   def emit_code(:constant, _code_snippet, value) do
     """
-        movl	$#{value}, %eax
+        movl  $#{value}, %eax
     """
         #"$#{value}"
   end

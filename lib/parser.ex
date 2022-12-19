@@ -67,11 +67,11 @@ defmodule Parser do
                 end
             end
           else
-            {{:error, "Error: open brace missed",numline,next_token}, rest}
+            {{:error, "Error: falta la llave abierta",numline,next_token}, rest}
           end
       end
     else
-      {{:error, "Error: incomplete program",numline,next_token}, []}
+      {{:error, "Error: programa incompleto",numline,next_token}, []}
     end
   end
 
@@ -81,26 +81,29 @@ defmodule Parser do
       expression = parse_expression(rest)
 
       case expression do
-        {{:error, error_message, _, _}, rest} ->
+        {{:error, error_message, 0, 0}, rest} ->
           {{:error, error_message, numline, next_token}, rest}
+
+        {{:error, error_message, numline, next_token}, rest} ->
+          {{:error, error_message, numline, next_token}, rest}
+
 
         {exp_node, [{next_token,numline}| rest]} ->
           if next_token == :semicolon do
             {%AST{node_name: :return, left_node: exp_node}, rest}
           else
-            {{:error,"Error: semicolon missed after constant to finish return statement",
+            {{:error,"Error: falta el punto y coma después de la constante para finalizar la declaración de devolución",
                       numline,next_token}, rest}
           end
       end
     else
-      {{:error, "Error: return keyword missed",numline,next_token}, rest}
+      {{:error, "Error: falta la palabra clave 'return'",numline,next_token}, rest}
     end
   end
 
   def parse_expression(rest) do
     if rest != [] do
       [{next_token,numline} | rest] = rest
-
       case next_token do
         {:constant, value} ->
           {%AST{node_name: :constant, value: value}, rest}
@@ -117,7 +120,7 @@ defmodule Parser do
                 {%AST{node_name: next_token, left_node: nodo}, rest}
             end
           else
-            {{:error, "Error: constant value missed",numline,next_token}, rest}
+            {{:error, "Error: falta el valor de la constante",numline,next_token}, rest}
           end
       end
     else

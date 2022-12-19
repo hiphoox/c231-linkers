@@ -55,7 +55,7 @@ defmodule Nqcc do
     IO.puts("Usage (path) --ast")
   end
 
- defp compile_file(file_path) do
+  defp compile_file(file_path) do
     IO.puts("Compiling file: " <> file_path)
     assembly_path = String.replace_trailing(file_path, ".c", ".s")
     lista_tokens=File.read!(file_path)
@@ -71,17 +71,28 @@ defmodule Nqcc do
         |> CodeGenerator.generate_code()
         |> Linker.generate_binary(assembly_path)
         |> IO.inspect()
-      end
-      if is_tuple(arbolAST) do
-        IO.puts("ERROR SINTACTICO")
-        {:error,msj,num_line,problema_atomo}=arbolAST
-        line = to_string(num_line)
-        problema = to_string(problema_atomo)
-        msj_error="Errror en linea (#{line}): #{msj}. Cerca de: #{problema}"
-        IO.inspect(msj_error)
+      else
+
+        if is_tuple(arbolAST) do
+          IO.puts("ERROR SINTACTICO")
+          {:error, msj, num_line, problema_atomo} = arbolAST
+          line = to_string(num_line)
+
+          if is_tuple(problema_atomo) do #Constante
+            {token,int} = problema_atomo
+            problema = to_string(token) <> "["<> to_string(int)<>"]"
+            msj_error="En linea (#{line}), #{msj}. Cerca de: #{problema}"
+            IO.inspect(msj_error)
+          else #Es un atomo
+            problema = to_string(problema_atomo)
+            msj_error="En linea (#{line}), #{msj}. Cerca de: #{problema}"
+            IO.inspect(msj_error)
+          end
+        end
+
       end
     end
-end
+  end
 
 
 defp token_list_gen(file_path) do

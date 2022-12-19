@@ -132,17 +132,17 @@ defmodule ParserTest do
     },
     tupla_error1: {:error, "Error: falta el tipo de valor de retorno", 1,:main_keyword},
     tupla_error2: {:error, "Archivo sin elementos",0,"--"},
-    tupla_error3: {:error, "Error: semicolon missed after constant to finish return statement",
+    tupla_error3: {:error, "Error: falta el punto y coma después de la constante para finalizar la declaración de devolución",
                             2,:close_brace},
     tupla_error4: {:error, "Error: falta la función principal main",1,:return_keyword},
     tupla_error5: {:error, "Error: falta el paréntesis abierto",1,:close_paren},
     tupla_error6: {:error, "Error: falta el paréntesis de cierre", 2, {:constant, 2}},
     tupla_error7: {:error, "Error: Hay más elementos después del final de la función",0,"}"},
-    tupla_error8: {:error, "Error: incomplete program", 1, :open_brace},
+    tupla_error8: {:error, "Error: programa incompleto", 1, :open_brace},
     tupla_error9: {:error, "Error: falta la llave abierta", 2, :return_keyword},
     tupla_error10: {:error, "Error: falta la llave de cierre",1,:open_brace},
-    tupla_error11: {:error, "Error: return keyword missed", 2, {:constant, 2}},
-    tupla_error12: {:error, "Error: constant value missed", 2, :semicolon}
+    tupla_error11: {:error, "Error: falta la palabra clave 'return'", 2, {:constant, 2}},
+    tupla_error12: {:error, "Error: falta el valor de la constante", 2, :semicolon}
   }
   end
 
