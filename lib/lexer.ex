@@ -34,22 +34,31 @@ defmodule Lexer do
         ";" <> rest ->
           {{:semicolon, code_line}, rest}
 
+        "-" <> rest ->
+          {{:negation, code_line}, rest}
+
+        "~" <> rest ->
+          {{:bitwise_complement, code_line}, rest}
+
+        "!" <> rest ->
+          {{:logical_negation, code_line}, rest}
+
         "return" <> rest ->
-          if String.first(rest) in ["{","}","(",")",";",nil] do
+          if String.first(rest) in ["{","}","(",")",";","-","~","!",nil] do
             {{:return_keyword, code_line}, rest}
           else
             {:error,{"Token not valid: #{program}",linea}}
           end
 
         "int" <> rest ->
-          if String.first(rest) in ["{","}","(",")",";",nil] do
+          if String.first(rest) in ["{","}","(",")",";","-","~","!",nil] do
             {{:int_keyword, code_line}, rest}
           else
             {:error,{"Token not valid: #{program}",linea}}
           end
 
         "main" <> rest ->
-        if String.first(rest) in ["{","}","(",")",";",nil] do
+        if String.first(rest) in ["{","}","(",")",";","-","~","!",nil] do
           {{:main_keyword, code_line}, rest}
         else
           {:error,{"Token not valid: #{program}",linea}}

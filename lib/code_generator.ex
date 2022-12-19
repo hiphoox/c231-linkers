@@ -31,21 +31,45 @@ defmodule CodeGenerator do
     """
         .globl  main
     main:
+        endbr64
     """ <>
       code_snippet
   end
 
   def emit_code(:return, code_snippet, _) do
+    code_snippet<>
     """
-        endbr64
-        movl    #{code_snippet}, %eax
         ret
         .section	.note.GNU-stack,"",@progbits
 
     """
   end
 
+  def emit_code(:negation, code_snippet, _) do
+    code_snippet<>
+    """
+        neg	%eax
+    """
+  end
+  def emit_code(:bitwise_complement, code_snippet, _) do
+    code_snippet<>
+    """
+        not	%eax
+    """
+  end
+  def emit_code(:logical_negation, code_snippet, _) do
+    code_snippet<>
+    """
+    cmpl     $0, %eax
+    movl     $0, %eax
+    sete     %al
+    """
+  end
+
   def emit_code(:constant, _code_snippet, value) do
-    "$#{value}"
+    """
+        movl	$#{value}, %eax
+    """
+        #"$#{value}"
   end
 end

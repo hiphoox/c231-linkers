@@ -10,14 +10,14 @@ defmodule Parser do
         if rest == [] do
           %AST{node_name: :program, left_node: function_node}
         else
-          {:error, "Error: there are more elements after function end",0,"more elements"}
+          {:error, "Error: Hay más elementos después del final de la función",0,"}"}
         end
     end
 
   end
 
   def parse_program(_) do
-    {:error, "File without elements",0,"more elements"}
+    {:error, "Archivo sin elementos",0,"--"}
   end
 
   def parse_function([{next_token,numline} | rest],contador) do
@@ -27,25 +27,25 @@ defmodule Parser do
           if next_token == :int_keyword do
             parse_function(rest,contador+1)
           else
-            {{:error, "Error, return type value missed",numline,next_token},rest}
+            {{:error, "Error: falta el tipo de valor de retorno",numline,next_token},rest}
           end
         1->
           if next_token == :main_keyword do
             parse_function(rest,contador+1)
           else
-            {{:error, "Error: main function missed",numline,next_token},rest}
+            {{:error, "Error: falta la función principal main",numline,next_token},rest}
           end
         2->
           if next_token == :open_paren do
             parse_function(rest,contador+1)
           else
-            {{:error, "Error: open parentesis missed",numline,next_token},rest}
+            {{:error, "Error: falta el paréntesis abierto",numline,next_token},rest}
           end
         3->
           if next_token == :close_paren do
             parse_function(rest,contador+1)
           else
-            {{:error, "Error: close parentesis missed",numline,next_token},rest}
+            {{:error, "Error: falta el paréntesis de cierre",numline,next_token},rest}
           end
         4->
           if next_token == :open_brace do
@@ -60,10 +60,10 @@ defmodule Parser do
                   if next_token == :close_brace do
                     {%AST{node_name: :function, value: :main, left_node: statement_node}, rest}
                   else
-                    {{:error, "Error: close brace missed",numline,next_token}, rest}
+                    {{:error, "Error: falta la llave abierta",numline,next_token}, rest}
                   end
                 else
-                    {{:error, "Error: close brace missed",numline,next_token}, rest}
+                    {{:error, "Error: falta la llave de cierre",numline,next_token}, rest}
                 end
             end
           else
@@ -81,8 +81,8 @@ defmodule Parser do
       expression = parse_expression(rest)
 
       case expression do
-        {{:error, error_message, numline,next_token}, rest} ->
-          {{:error, error_message, numline,next_token}, rest}
+        {{:error, error_message, _, _}, rest} ->
+          {{:error, error_message, numline, next_token}, rest}
 
         {exp_node, [{next_token,numline}| rest]} ->
           if next_token == :semicolon do
@@ -97,10 +97,47 @@ defmodule Parser do
     end
   end
 
-  def parse_expression([{next_token,numline} | rest]) do
-    case next_token do
-      {:constant, value} -> {%AST{node_name: :constant, value: value}, rest}
-      _ -> {{:error, "Error: constant value missed",numline,next_token}, rest}
+  def parse_expression(rest) do
+    if rest != [] do
+      [{next_token,numline} | rest] = rest
+
+      case next_token do
+        {:constant, value} ->
+          {%AST{node_name: :constant, value: value}, rest}
+
+        _ ->
+          op = unary_op(next_token)
+          if op == :ok do
+            exp = parse_expression(rest)
+            case exp do
+              {{:error, error_message, numline,next_token}, rest} ->
+                {{:error, error_message, numline,next_token}, rest}
+
+              {nodo,rest} ->
+                {%AST{node_name: next_token, left_node: nodo}, rest}
+            end
+          else
+            {{:error, "Error: constant value missed",numline,next_token}, rest}
+          end
+      end
+    else
+      {{:error, "Error: programa incompleto", 0, 0}, []}
     end
   end
+
+  def unary_op(next_token) do
+    case next_token do
+      :negation ->
+        :ok
+
+      :bitwise_complement ->
+        :ok
+
+      :logical_negation ->
+        :ok
+
+      _ -> :error
+    end
+  end
+
 end
