@@ -130,6 +130,109 @@ defmodule ParserTest do
       right_node: nil,
       value: nil
     },
+    arbol5: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: %AST{
+            left_node: %AST{
+              left_node: nil,
+              node_name: :constant,
+              right_node: nil,
+              value: 3
+            },
+            node_name: :logical_negation,
+            right_node: nil,
+            value: nil
+          },
+          node_name: :return,
+          right_node: nil,
+          value: nil
+        },
+        node_name: :function,
+        right_node: nil,
+        value: :main
+      },
+      node_name: :program,
+      right_node: nil,
+      value: nil
+    },
+    arbol6: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: %AST{
+            left_node: %AST{
+              left_node: %AST{
+                left_node: %AST{
+                  left_node: %AST{
+                    left_node: %AST{
+                      left_node: %AST{
+                        left_node: %AST{
+                          left_node: %AST{
+                            left_node: %AST{
+                              left_node: %AST{
+                                left_node: %AST{
+                                  left_node: nil,
+                                  node_name: :constant,
+                                  right_node: nil,
+                                  value: 6
+                            },
+                            node_name: :logical_negation,
+                            right_node: nil,
+                            value: nil
+                          },
+                          node_name: :negation,
+                          right_node: nil,
+                          value: nil
+                        },
+                        node_name: :bitwise_complement,
+                        right_node: nil,
+                        value: nil
+                      },
+                      node_name: :bitwise_complement,
+                      right_node: nil,
+                      value: nil
+                    },
+                    node_name: :negation,
+                    right_node: nil,
+                    value: nil
+                  },
+                  node_name: :logical_negation,
+                  right_node: nil,
+                  value: nil
+                },
+                node_name: :logical_negation,
+                right_node: nil,
+                value: nil
+              },
+              node_name: :logical_negation,
+              right_node: nil,
+              value: nil
+            },
+            node_name: :logical_negation,
+            right_node: nil,
+            value: nil
+          },
+          node_name: :logical_negation,
+          right_node: nil,
+          value: nil
+        },
+        node_name: :logical_negation,
+        right_node: nil,
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+
     tupla_error1: {:error, "Error: falta el tipo de valor de retorno", 1,:main_keyword},
     tupla_error2: {:error, "Archivo sin elementos",0,"--"},
     tupla_error3: {:error, "Error: falta el punto y coma después de la constante para finalizar la declaración de devolución",
@@ -142,7 +245,11 @@ defmodule ParserTest do
     tupla_error9: {:error, "Error: falta la llave abierta", 2, :return_keyword},
     tupla_error10: {:error, "Error: falta la llave de cierre",1,:open_brace},
     tupla_error11: {:error, "Error: falta la palabra clave 'return'", 2, {:constant, 2}},
-    tupla_error12: {:error, "Error: falta el valor de la constante", 2, :semicolon}
+    tupla_error12: {:error, "Error: falta el valor de la constante", 2, :semicolon},
+    tupla_error13: {:error, "Error: falta el punto y coma después de la constante para finalizar la declaración de devolución", 2, :logical_negation},
+    tupla_error14: {:error, "Error: falta el punto y coma después de la constante para finalizar la declaración de devolución", 2, :logical_negation},
+    tupla_error15: {:error, "Error: falta el valor de la constante", 2, :semicolon},
+    tupla_error16: {:error, "Error: falta la llave abierta", 1, :negation}
   }
   end
 
@@ -369,5 +476,81 @@ test "return 0", state do
     s_code = Sanitizer.sanitize_source(code)
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error12]
   end
+
+#------ Pruebas parte 2 -------
+
+test "return !3", state do
+
+  code = """
+      int main() {
+        return !3;
+    }
+    """
+
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol5]
+end
+
+test "con varios operadores unarios", state do
+
+  code = """
+      int main() {
+        return !!!!!!-~~-!6;
+    }
+    """
+
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol6]
+end
+
+test "con operador unario a la derecha del operando", state do
+
+  code = """
+      int main() {
+        return 2!;
+    }
+    """
+
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error13]
+end
+
+test "constante en medio de operadores unarios", state do
+
+  code = """
+      int main() {
+        return --8!~;
+    }
+    """
+
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error14]
+end
+
+test "operador unario sin constante", state do
+
+  code = """
+      int main() {
+        return !;
+    }
+    """
+
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error15]
+end
+
+test "con operadores en desorden", state do
+
+  code = """
+      int main() -~ {
+        return -2;
+    }
+    """
+
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error16]
+end
+
+
 
  end

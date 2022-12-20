@@ -104,7 +104,89 @@ defmodule LexerTest do
       {:semicolon, 3},
       {:error, {"Token not valid: g", 3}},
       {:close_brace, 4}
-    ]
+    ],
+    tokens8: [  #Comun
+       {:int_keyword, 1},
+       {:main_keyword, 1},
+       {:open_paren, 1},
+       {:close_paren, 1},
+       {:open_brace, 1},
+       {:return_keyword, 2},
+       {:logical_negation, 2},
+       {{:constant, 3}, 2},
+       {:semicolon, 2},
+       {:close_brace, 3}
+     ],
+     tokens9: [  #Comun
+       {:int_keyword, 1},
+       {:main_keyword, 1},
+       {:open_paren, 1},
+       {:close_paren, 1},
+       {:open_brace, 1},
+       {:return_keyword, 2},
+       {:negation, 2},
+       {{:constant, 4}, 2},
+       {:semicolon, 2},
+       {:close_brace, 3}
+     ],
+     tokens10: [  #Comun
+       {:int_keyword, 1},
+       {:main_keyword, 1},
+       {:open_paren, 1},
+       {:close_paren, 1},
+       {:open_brace, 1},
+       {:return_keyword, 2},
+       {:bitwise_complement, 2},
+       {{:constant, 7}, 2},
+       {:semicolon, 2},
+       {:close_brace, 3}
+     ],
+     tokens11: [  #Comun
+       {:int_keyword, 1},
+       {:main_keyword, 1},
+       {:open_paren, 1},
+       {:close_paren, 1},
+       {:open_brace, 1},
+       {:return_keyword, 2},
+       {:logical_negation, 2},
+       {:bitwise_complement, 2},
+       {:negation, 2},
+       {{:constant, 5}, 2},
+       {:semicolon, 2},
+       {:close_brace, 3}
+     ],
+     tokens12: [  #Comun
+       {:int_keyword, 1},
+       {:main_keyword, 1},
+       {:open_paren, 1},
+       {:close_paren, 1},
+       {:open_brace, 1},
+       {:return_keyword, 2},
+       {:logical_negation, 2},
+       {:logical_negation, 2},
+       {:logical_negation, 2},
+       {:logical_negation, 2},
+       {:logical_negation, 2},
+       {:logical_negation, 2},
+       {:negation, 2},
+       {:bitwise_complement, 2},
+       {:bitwise_complement, 2},
+       {:negation, 2},
+       {:logical_negation, 2},
+       {{:constant, 6}, 2},
+       {:semicolon, 2},
+       {:close_brace, 3}
+     ],
+     tokens13: [  #Comun
+       {:int_keyword, 1},
+       {:main_keyword, 1},
+       {:open_paren, 1},
+       {:close_paren, 1},
+       {:open_brace, 1},
+       {:return_keyword, 2},
+       {:error, {"Token not valid: +9;", 2}},
+       {:close_brace, 3}
+     ]
     }
   end
 
@@ -398,5 +480,89 @@ defmodule LexerTest do
 
 
   #------ Pruebas parte 2 -------
+
+  test "return !3", state do
+    code = """
+      int main() {
+        return !3;
+    }
+    """
+    s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens8]
+  end
+
+  test "return -4", state do
+    code = """
+      int main() {
+        return -4;
+    }
+    """
+    s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens9]
+  end
+
+  test "return ~7", state do
+    code = """
+      int main() {
+        return ~7;
+    }
+    """
+    s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens10]
+  end
+
+  test "con los tres operadores unarios", state do
+    code = """
+      int main() {
+        return !~-5;
+    }
+    """
+    s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens11]
+  end
+
+  test "con varios operadores unarios", state do
+    code = """
+      int main() {
+        return !!!!!!-~~-!6;
+    }
+    """
+    s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens12]
+  end
+
+    test "operador unario y letra como constante", state do
+      code = """
+        int main() {
+          return -a;
+        }
+      """
+
+    s_code = Sanitizer.sanitize_source(code)
+    expected_result = List.update_at(
+    state[:tokens9], 7, fn _ -> {:error, {"Token not valid: a;", 2}} end)
+    expected_result = List.delete_at(expected_result, 8)
+    assert Lexer.scan_words(s_code) == expected_result
+  
+  end
+
+    test "operador unario no válido", state do
+    code = """
+    int main() {
+    return +9;
+    }
+  """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens13]
+  end
+
+  
+
 
 end
