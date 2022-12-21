@@ -35,7 +35,7 @@ To compile the .c file
 
 To use flags
 
-`./nqcc --help`
-`./nqcc --tl ./examples/return_2.c`
+`./nqcc --help`  
+`./nqcc --tl ./examples/return_2.c`  
 `./nqcc --o ./examples/return_2.c return`
   
