@@ -18,8 +18,9 @@ You can use the following args to use the compiler
 
 **Flags**
 
-`./nqcc --help`  
-`./nqcc (path of the .c) --<flag>`
+`./nqcc --help` :print the help
+
+`./nqcc --<flag> (path of the .c)`
 
 `--asm` :Shows file assembler  
 `--tl`  :Shows token List  
@@ -30,9 +31,11 @@ You can use the following args to use the compiler
 
 To compile the .c file
 
-`./nqcc ./examples/return2.c`
+`./nqcc ./examples/return_2.c`
 
 To use flags
 
 `./nqcc --help`
+`./nqcc --tl ./examples/return_2.c`
+`./nqcc --o ./examples/return_2.c return`
   

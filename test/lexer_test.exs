@@ -548,7 +548,7 @@ defmodule LexerTest do
     state[:tokens9], 7, fn _ -> {:error, {"Token not valid: a;", 2}} end)
     expected_result = List.delete_at(expected_result, 8)
     assert Lexer.scan_words(s_code) == expected_result
-  
+
   end
 
     test "operador unario no válido", state do
@@ -556,13 +556,9 @@ defmodule LexerTest do
     int main() {
     return +9;
     }
-  """
+    """
   s_code = Sanitizer.sanitize_source(code)
 
     assert Lexer.scan_words(s_code) == state[:tokens13]
   end
-
-  
-
-
 end
