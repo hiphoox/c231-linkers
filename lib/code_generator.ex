@@ -72,6 +72,5 @@ defmodule CodeGenerator do
     """
         movl  $#{value}, %eax
     """
-        #"$#{value}"
   end
 end
