@@ -234,45 +234,134 @@ defmodule LexerTest do
       {:close_brace, 3}
     ],
     tokens18: [ #Suma
-    {:int_keyword, 1},
-    {:main_keyword, 1},
-    {:open_paren, 1},
-    {:close_paren, 1},
-    {:open_brace, 1},
-    {:return_keyword, 2},
-    {{:constant, 2}, 2},
-    {:addition, 2},
-    {{:constant, 2}, 2},
-    {:semicolon, 2},
-    {:close_brace, 3}
-  ],
-  token19:[ #Multiplicacion
-  {:int_keyword, 1},
-  {:main_keyword, 1},
-  {:open_paren, 1},
-  {:close_paren, 1},
-  {:open_brace, 1},
-  {:return_keyword, 2},
-  {{:constant, 2}, 2},
-  {:multiplication, 2},
-  {{:constant, 2}, 2},
-  {:semicolon, 2},
-  {:close_brace, 3}
-],
-token20:[ #Division
-  {:int_keyword, 1},
-  {:main_keyword, 1},
-  {:open_paren, 1},
-  {:close_paren, 1},
-  {:open_brace, 1},
-  {:return_keyword, 2},
-  {{:constant, 2}, 2},
-  {:division, 2},
-  {{:constant, 2}, 2},
-  {:semicolon, 2},
-  {:close_brace, 3}
-]
-
+      {:int_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:addition, 2},
+      {{:constant, 2}, 2},
+      {:semicolon, 2},
+      {:close_brace, 3}
+    ],
+    token19:[ #Multiplicacion
+      {:int_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:multiplication, 2},
+      {{:constant, 2}, 2},
+      {:semicolon, 2},
+      {:close_brace, 3}
+    ],
+    token20:[ #Division
+      {:int_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:division, 2},
+      {{:constant, 2}, 2},
+      {:semicolon, 2},
+      {:close_brace, 3}
+    ],
+    token21:[ #Combinado Resta y Suma
+      {:int_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:negation, 2},
+      {{:constant, 3}, 2},
+      {:addition, 2},
+      {{:constant, 4}, 2},
+      {:semicolon, 2},
+      {:close_brace, 3}
+    ],
+    token22:[ #Combinado Suma y mutiplicacion
+      {:int_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:addition, 2},
+      {{:constant, 3}, 2},
+      {:multiplication, 2},
+      {{:constant, 4}, 2},
+      {:semicolon, 2},
+      {:close_brace, 3}
+    ],
+    token23:[ #Combinado Suma y division
+      {:int_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:division, 2},
+      {{:constant, 3}, 2},
+      {:addition, 2},
+      {{:constant, 4}, 2},
+      {:semicolon, 2},
+      {:close_brace, 3}
+    ],
+    token24:[ #Combinado multiplicacion y division
+      {:int_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:multiplication, 2},
+      {{:constant, 3}, 2},
+      {:division, 2},
+      {{:constant, 4}, 2},
+      {:semicolon, 2},
+      {:close_brace, 3}
+    ],
+    token25:[ #Combinado multiplicacion y resta
+      {:int_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:multiplication, 2},
+      {{:constant, 3}, 2},
+      {:negation, 2},
+      {{:constant, 4}, 2},
+      {:semicolon, 2},
+      {:close_brace, 3}
+    ],
+    token25:[ #Combinado division y resta
+      {:int_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:division, 2},
+      {{:constant, 3}, 2},
+      {:negation, 2},
+      {{:constant, 4}, 2},
+      {:semicolon, 2},
+      {:close_brace, 3}
+    ]
 
 
 
@@ -748,8 +837,70 @@ token20:[ #Division
     assert Lexer.scan_words(s_code) == state[:tokens20]
   end
 
+  test "return 2-3+4", state do
+    code = """
+    int main() {
+    return 2-3+4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
 
+    assert Lexer.scan_words(s_code) == state[:tokens21]
+  end
 
+  test "return 2+3*4", state do
+    code = """
+    int main() {
+    return 2+3*4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
 
+    assert Lexer.scan_words(s_code) == state[:tokens22]
+  end
+
+  test "return 2/3+4", state do
+    code = """
+    int main() {
+    return 2/3+4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens23]
+  end
+
+  test "return 2*3/4", state do
+    code = """
+    int main() {
+    return 2*3/4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens24]
+  end
+
+  test "return 2*3-4", state do
+    code = """
+    int main() {
+    return 2*3-4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens25]
+  end
+
+  test "return 2/3-4", state do
+    code = """
+    int main() {
+    return 2/3-4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens26]
+  end
 
 end
