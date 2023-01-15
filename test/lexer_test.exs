@@ -347,7 +347,7 @@ defmodule LexerTest do
       {:semicolon, 2},
       {:close_brace, 3}
     ],
-    token25:[ #Combinado division y resta
+    token26:[ #Combinado division y resta
       {:int_keyword, 1},
       {:main_keyword, 1},
       {:open_paren, 1},
@@ -361,7 +361,104 @@ defmodule LexerTest do
       {{:constant, 4}, 2},
       {:semicolon, 2},
       {:close_brace, 3}
-    ]
+    ],
+    token27:[ #Multioperacion con 3
+      {:int_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:division, 2},
+      {{:constant, 3}, 2},
+      {:negation, 2},
+      {{:constant, 4}, 2},
+      {:multiplication, 2},
+      {{:constant, 5}, 2},
+      {:semicolon, 2},
+      {:close_brace, 3}
+    ],
+    token28:[ #Multioperacion con 4
+      {:int_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:division, 2},
+      {{:constant, 3}, 2},
+      {:negation, 2},
+      {{:constant, 4}, 2},
+      {:multiplication, 2},
+      {{:constant, 5}, 2},
+      {:addition, 2},
+      {{:constant, 6}, 2},
+      {:semicolon, 2},
+      {:close_brace, 3}
+    ],
+    token29:[ #Multi Resta
+    {:int_keyword, 1},
+    {:main_keyword, 1},
+    {:open_paren, 1},
+    {:close_paren, 1},
+    {:open_brace, 1},
+    {:return_keyword, 2},
+    {{:constant, 2}, 2},
+    {:negation, 2},
+    {{:constant, 3}, 2},
+    {:negation, 2},
+    {{:constant, 4}, 2},
+    {:semicolon, 2},
+    {:close_brace, 3}
+  ],
+  token30:[ #Multi Suma
+    {:int_keyword, 1},
+    {:main_keyword, 1},
+    {:open_paren, 1},
+    {:close_paren, 1},
+    {:open_brace, 1},
+    {:return_keyword, 2},
+    {{:constant, 2}, 2},
+    {:addition, 2},
+    {{:constant, 3}, 2},
+    {:addition, 2},
+    {{:constant, 4}, 2},
+    {:semicolon, 2},
+    {:close_brace, 3}
+  ],
+  token31:[ #Multi Multiplicacion
+    {:int_keyword, 1},
+    {:main_keyword, 1},
+    {:open_paren, 1},
+    {:close_paren, 1},
+    {:open_brace, 1},
+    {:return_keyword, 2},
+    {{:constant, 2}, 2},
+    {:multiplication, 2},
+    {{:constant, 3}, 2},
+    {:multiplication, 2},
+    {{:constant, 4}, 2},
+    {:semicolon, 2},
+    {:close_brace, 3}
+  ],
+  token32:[ #Multi Division
+    {:int_keyword, 1},
+    {:main_keyword, 1},
+    {:open_paren, 1},
+    {:close_paren, 1},
+    {:open_brace, 1},
+    {:return_keyword, 2},
+    {{:constant, 2}, 2},
+    {:division, 2},
+    {{:constant, 3}, 2},
+    {:division, 2},
+    {{:constant, 4}, 2},
+    {:semicolon, 2},
+    {:close_brace, 3}
+  ],
+
 
 
 
@@ -793,7 +890,7 @@ defmodule LexerTest do
     assert Lexer.scan_words(s_code) == state[:tokens16]
   end
 
-  test "return 2 - 2", state do
+  test "return 2-2", state do
     code = """
     int main() {
     return 2-2;
@@ -902,5 +999,86 @@ defmodule LexerTest do
 
     assert Lexer.scan_words(s_code) == state[:tokens26]
   end
+
+  test "return 2/3-4*5", state do
+    code = """
+    int main() {
+    return 2/3-4*5;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens27]
+  end
+
+  test "return 2/3-4*5+6", state do
+    code = """
+    int main() {
+    return 2/3-4*5+6;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens28]
+  end
+
+  test "return 2-3-4", state do
+    code = """
+    int main() {
+    return 2-3-4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens29]
+  end
+
+  test "return 2+3+4", state do
+    code = """
+    int main() {
+    return 2+3+4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens30]
+  end
+
+  test "return 2*3*4", state do
+    code = """
+    int main() {
+    return 2*3*4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens31]
+  end
+
+  test "return 2/3/4", state do
+    code = """
+    int main() {
+    return 2/3/4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens32]
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 end
