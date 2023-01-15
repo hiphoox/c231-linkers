@@ -186,9 +186,116 @@ defmodule LexerTest do
        {:return_keyword, 2},
        {:error, {"Token not valid: +9;", 2}},
        {:close_brace, 3}
-     ]
+     ],
+     tokens14:  [ #Return con una sola constante
+      {:int_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:error, {"Token not valid: +;", 2}},
+      {:close_brace, 3}
+    ],
+    tokens15:  [
+      {:int_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:error, {"Token not valid: *;", 2}},
+      {:close_brace, 3}
+    ],
+    tokens16: [
+      {:int_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:error, {"Token not valid: /;", 2}},
+      {:close_brace, 3}
+    ],
+    tokens17: [ #Resta
+      {:int_keyword, 1},
+      {:main_keyword, 1},
+      {:open_paren, 1},
+      {:close_paren, 1},
+      {:open_brace, 1},
+      {:return_keyword, 2},
+      {{:constant, 2}, 2},
+      {:negation, 2},
+      {{:constant, 2}, 2},
+      {:semicolon, 2},
+      {:close_brace, 3}
+    ],
+    tokens18: [ #Suma
+    {:int_keyword, 1},
+    {:main_keyword, 1},
+    {:open_paren, 1},
+    {:close_paren, 1},
+    {:open_brace, 1},
+    {:return_keyword, 2},
+    {{:constant, 2}, 2},
+    {:addition, 2},
+    {{:constant, 2}, 2},
+    {:semicolon, 2},
+    {:close_brace, 3}
+  ],
+  token19:[ #Multiplicacion
+  {:int_keyword, 1},
+  {:main_keyword, 1},
+  {:open_paren, 1},
+  {:close_paren, 1},
+  {:open_brace, 1},
+  {:return_keyword, 2},
+  {{:constant, 2}, 2},
+  {:multiplication, 2},
+  {{:constant, 2}, 2},
+  {:semicolon, 2},
+  {:close_brace, 3}
+],
+token20:[ #Division
+  {:int_keyword, 1},
+  {:main_keyword, 1},
+  {:open_paren, 1},
+  {:close_paren, 1},
+  {:open_brace, 1},
+  {:return_keyword, 2},
+  {{:constant, 2}, 2},
+  {:division, 2},
+  {{:constant, 2}, 2},
+  {:semicolon, 2},
+  {:close_brace, 3}
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
   end
+
+
 
   # tests to pass
   test "return 2", state do
@@ -561,4 +668,88 @@ defmodule LexerTest do
 
     assert Lexer.scan_words(s_code) == state[:tokens13]
   end
+
+  #Pruebas parte 3
+
+  test "falta constante en suma", state do
+    code = """
+    int main() {
+    return 2+;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens14]
+  end
+
+  test "falta constante en multiplicacion", state do
+    code = """
+    int main() {
+    return 2*;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens15]
+  end
+
+  test "falta constante en division", state do
+    code = """
+    int main() {
+    return 2/;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens16]
+  end
+
+  test "return 2 - 2", state do
+    code = """
+    int main() {
+    return 2-2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens17]
+  end
+
+  test "return 2+2", state do
+    code = """
+    int main() {
+    return 2+2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens18]
+  end
+
+  test "return 2*2", state do
+    code = """
+    int main() {
+    return 2*2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens19]
+  end
+
+  test "return 2/2", state do
+    code = """
+    int main() {
+    return 2/2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens20]
+  end
+
+
+
+
+
 end
