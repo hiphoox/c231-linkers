@@ -458,29 +458,112 @@ defmodule LexerTest do
     {:semicolon, 2},
     {:close_brace, 3}
   ],
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  token33:[ #And Comparation
+    {:int_keyword,1},
+    {:main_keyword,1},
+    {:open_paren,1},
+    {:close_paren,1},
+    {:open_brace,1},
+    {:return_keyword,2},
+    {{:constant, 2},2},
+    {:and,2},
+    {{:constant, 2},2},
+    {:semicolon,2},
+    {:close_brace,3}
+  ],
+  token34:[ #Or Comparation
+    {:int_keyword,1},
+    {:main_keyword,1},
+    {:open_paren,1},
+    {:close_paren,1},
+    {:open_brace,1},
+    {:return_keyword,2},
+    {{:constant, 2},2},
+    {:or,2},
+    {{:constant, 2},2},
+    {:semicolon,2},
+    {:close_brace,3}
+  ],
+  token35:[ #Equal Comparation
+    {:int_keyword,1},
+    {:main_keyword,1},
+    {:open_paren,1},
+    {:close_paren,1},
+    {:open_brace,1},
+    {:return_keyword,2},
+    {{:constant, 2},2},
+    {:equal,2},
+    {{:constant, 2},2},
+    {:semicolon,2},
+    {:close_brace,3}
+  ],
+  token36:[ #not equal Comparation
+    {:int_keyword,1},
+    {:main_keyword,1},
+    {:open_paren,1},
+    {:close_paren,1},
+    {:open_brace,1},
+    {:return_keyword,2},
+    {{:constant, 2},2},
+    {:notequal,2},
+    {{:constant, 2},2},
+    {:semicolon,2},
+    {:close_brace,3}
+  ],
+  token37:[ #less equal Comparation
+    {:int_keyword,1},
+    {:main_keyword,1},
+    {:open_paren,1},
+    {:close_paren,1},
+    {:open_brace,1},
+    {:return_keyword,2},
+    {{:constant, 2},2},
+    {:lessequal,2},
+    {{:constant, 2},2},
+    {:semicolon,2},
+    {:close_brace,3}
+  ],
+  token38:[ #less Comparation
+    {:int_keyword,1},
+    {:main_keyword,1},
+    {:open_paren,1},
+    {:close_paren,1},
+    {:open_brace,1},
+    {:return_keyword,2},
+    {{:constant, 2},2},
+    {:less,2},
+    {{:constant, 2},2},
+    {:semicolon,2},
+    {:close_brace,3}
+  ],
+  token39:[ #great equal Comparation
+    {:int_keyword,1},
+    {:main_keyword,1},
+    {:open_paren,1},
+    {:close_paren,1},
+    {:open_brace,1},
+    {:return_keyword,2},
+    {{:constant, 2},2},
+    {:greatequal,2},
+    {{:constant, 2},2},
+    {:semicolon,2},
+    {:close_brace,3}
+  ],
+  token40:[ #great Comparation
+    {:int_keyword,1},
+    {:main_keyword,1},
+    {:open_paren,1},
+    {:close_paren,1},
+    {:open_brace,1},
+    {:return_keyword,2},
+    {{:constant, 2},2},
+    {:great,2},
+    {{:constant, 2},2},
+    {:semicolon,2},
+    {:close_brace,3}
+  ]
     }
   end
-
 
 
   # tests to pass
@@ -1066,19 +1149,93 @@ defmodule LexerTest do
     assert Lexer.scan_words(s_code) == state[:tokens32]
   end
 
+#Pruebas parte 4
 
+  test "return and comparation &&", state do
+    code = """
+    int main() {
+    return 2&&2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
 
+    assert Lexer.scan_words(s_code) == state[:tokens33]
+  end
 
+  test "return or comparation ||", state do
+    code = """
+    int main() {
+    return 2||2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
 
+    assert Lexer.scan_words(s_code) == state[:tokens34]
+  end
 
+  test "return equal comparation ==", state do
+    code = """
+    int main() {
+    return 2==2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
 
+    assert Lexer.scan_words(s_code) == state[:tokens35]
+  end
 
+  test "return not equal comparation !=", state do
+    code = """
+    int main() {
+    return 2!=2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
 
+    assert Lexer.scan_words(s_code) == state[:tokens36]
+  end
 
+  test "return less equal comparation <=", state do
+    code = """
+    int main() {
+    return 2<=2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
 
+    assert Lexer.scan_words(s_code) == state[:tokens37]
+  end
 
+  test "return less comparation <", state do
+    code = """
+    int main() {
+    return 2<2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
 
+    assert Lexer.scan_words(s_code) == state[:tokens38]
+  end
 
+  test "return great equal comparation >=", state do
+    code = """
+    int main() {
+    return 2>=2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
 
+    assert Lexer.scan_words(s_code) == state[:tokens39]
+  end
 
+  test "return great comparation >", state do
+    code = """
+    int main() {
+    return 2>2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens40]
+  end
 end
