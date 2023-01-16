@@ -59,7 +59,76 @@ defmodule GeneratorTest do
         cmpl     $0, %eax\n    movl     $0, %eax\n    sete     %al\n    ret
         .section	.note.GNU-stack,"",@progbits
 
-    """,
+    """,#---return 2+2
+    codigo8:"""
+        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
+    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n  mov $2, %eax\n pop %ecx\n add %ecx, %eax\n ret
+       .section	.note.GNU-stack,"",@progbits
+
+    """,#---return 2*2
+    codigo9:"""
+        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
+    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n  mov $2, %eax\n pop %ecx\n imul %ecx, %eax\n ret
+       .section	.note.GNU-stack,"",@progbits
+
+    """,#---return 2-2
+    codigo10:"""
+        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
+    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n  mov $2, %eax\n pop %ecx\n sub %ecx, %eax\n ret
+       .section	.note.GNU-stack,"",@progbits
+
+    """,#---return 2/2
+    codigo11:"""
+        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
+    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n  cdq\n movl $2,%eax\n pop %ecx\n idivq %rcx\n ret
+       .section	.note.GNU-stack,"",@progbits
+
+    """,#---return 2==2
+    codigo12:"""
+        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
+    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n pop %ecx\n cmp %eax,%ecx\n mov $0,%eax\n sete %al ret
+       .section	.note.GNU-stack,"",@progbits
+
+    """,#---return 2!=2
+    codigo13:"""
+        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
+    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n movl $2,%eax\n pop %ecx\n cmp %eax,%ecx\n movl $0,%eax,setne %al\n ret
+       .section	.note.GNU-stack,"",@progbits
+
+    """,#---return 2<2
+    codigo14:"""
+        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
+    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n movl $2,%eax\n pop %ecx\n cmp %eax,%ecx\n movl $0,%eax,setl %al\n ret
+       .section	.note.GNU-stack,"",@progbits
+
+    """,#---return 2<=2
+    codigo15:"""
+        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
+    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n movl $2,%eax\n pop %ecx\n cmp %eax,%ecx\n movl $0,%eax,setle %al\n ret
+       .section	.note.GNU-stack,"",@progbits
+
+    """,#---return 2>2
+    codigo16:"""
+        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
+    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n movl $2,%eax\n pop %ecx\n cmp %eax,%ecx\n movl $0,%eax,setg %al\n ret
+       .section	.note.GNU-stack,"",@progbits
+
+    """#---return 2>=2
+    codigo17:"""
+        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
+    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n movl $2,%eax\n pop %ecx\n cmp %eax,%ecx\n movl $0,%eax,setge %al\n ret
+       .section	.note.GNU-stack,"",@progbits
+
+    """
+
+
+
+
+
+
+
+
+
     }
 
   end
@@ -213,4 +282,148 @@ defmodule GeneratorTest do
       |> Parser.parse_program()
       |> CodeGenerator.generate_code() == state[:codigo7]
   end
+
+#------ Pruebas parte 3 -------
+
+  test "Suma 2+2", state do
+    code = """
+    int main() {
+      return 2+2;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo8]
+  end
+
+  test "Suma 2*2", state do
+    code = """
+    int main() {
+      return 2*2;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo9]
+  end
+
+  test "resta 2-2", state do
+    code = """
+    int main() {
+      return 2-2;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo10]
+  end
+
+  test "Division 2/2", state do
+    code = """
+    int main() {
+      return 2/2;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo11]
+  end
+
+  #------ Pruebas parte 4 -------
+
+
+  test "Equal 2=2", state do
+    code = """
+    int main() {
+      return 2=2;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo12]
+  end
+
+  test "Not Equal 2!=2", state do
+    code = """
+    int main() {
+      return 2!=2;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo13]
+  end
+
+  test "Less 2<2", state do
+    code = """
+    int main() {
+      return 2<2;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo14]
+  end
+
+  test "Less equal 2<=2", state do
+    code = """
+    int main() {
+      return 2<=2;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo15]
+  end
+
+  test "Great 2>2", state do
+    code = """
+    int main() {
+      return 2>2;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo16]
+  end
+
+  test "Great Equal 2>=2", state do
+    code = """
+    int main() {
+      return 2>=2;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo17]
+  end
+
+
+
+
+
+
+
+
+
 end
