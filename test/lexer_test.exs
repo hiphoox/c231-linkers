@@ -938,7 +938,7 @@ defmodule LexerTest do
     assert Lexer.scan_words(s_code) == state[:tokens13]
   end
 
-  #Pruebas parte 3
+  #--------Pruebas parte 3-----------
 
   test "falta constante en suma", state do
     code = """
@@ -1149,7 +1149,150 @@ defmodule LexerTest do
     assert Lexer.scan_words(s_code) == state[:tokens32]
   end
 
-#Pruebas parte 4
+  test "return 2++9-2/4", state do
+    code = """
+    int main() {
+      return 2++9-2/4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens41]
+  end
+
+  test "return 7//9+4", state do
+    code = """
+    int main() {
+      return 7//9+4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens42]
+  end
+
+  test "return 2//3", state do
+    code = """
+    int main() {
+      return 2//3;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens43]
+  end
+
+  test "return 8**9", state do
+    code = """
+    int main() {
+      return 8**9;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens44]
+  end
+
+  test "return -2+9/7", state do
+    code = """
+    int main() {
+      return -2+9/7;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens45]
+  end
+
+  test "return ~-6+8*4", state do
+    code = """
+    int main() {
+      return ~-6+8*4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens46]
+  end
+
+  test "return 5-+/9*3", state do
+    code = """
+    int main() {
+      return 5-+/9*3;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens47]
+  end
+
+  test "return /7/", state do
+    code = """
+    int main() {
+      return /7/;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens48]
+  end
+
+  test "return *9--", state do
+    code = """
+    int main() {
+      return *9--;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens49]
+  end
+
+  test "return 2/-*+", state do
+    code = """
+    int main() {
+      return 2/-*+;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens50]
+  end
+
+  test "return 3/0", state do
+    code = """
+    int main() {
+      return 3/0;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens51]
+  end
+
+  test "return 0/5", state do
+    code = """
+    int main() {
+      return 0/5;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens52]
+  end
+
+  test "return ~+/--", state do
+    code = """
+    int main() {
+      return ~+/--;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens53]
+  end
+
+#------Pruebas parte 4---------
 
   test "return and comparation &&", state do
     code = """
@@ -1238,4 +1381,248 @@ defmodule LexerTest do
 
     assert Lexer.scan_words(s_code) == state[:tokens40]
   end
+
+  test "return <7", state do
+    code = """
+    int main() {
+    return <7;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens54]
+  end
+
+  test "return &&", state do
+    code = """
+    int main() {
+    return &&;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens55]
+  end
+
+  test "return 8=>7", state do
+    code = """
+    int main() {
+    return 8=>7;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens56]
+  end
+
+  test "return 4=<5", state do
+    code = """
+    int main() {
+    return 4=<5;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens57]
+  end
+
+  test "return 7===3", state do
+    code = """
+    int main() {
+    return 7===3;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens58]
+  end
+
+  test "return 6=!9", state do
+    code = """
+    int main() {
+    return 6=!9;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens59]
+  end
+
+  test "return 7&2", state do
+    code = """
+    int main() {
+    return 7&2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens60]
+  end
+
+  test "return 8|7", state do
+    code = """
+    int main() {
+    return 8|7;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens61]
+  end
+
+  test "return 1<<<9", state do
+    code = """
+    int main() {
+    return 1<<<9;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens62]
+  end
+
+  test "return 7||6==4&&1<2", state do
+    code = """
+    int main() {
+    return 7||6==4&&1<2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens63]
+  end
+
+  test "return 5=4", state do
+    code = """
+    int main() {
+    return 5=4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens64]
+  end
+
+  test "return -3<9", state do
+    code = """
+    int main() {
+    return -3<9;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens65]
+  end
+
+  test "return ~7||-6", state do
+    code = """
+    int main() {
+    return ~7||-6;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens66]
+  end
+
+  test "return --1>5", state do
+    code = """
+    int main() {
+    return --1>5;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens67]
+  end
+
+  test "return !4<=7", state do
+    code = """
+    int main() {
+    return !4<=7;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens68]
+  end
+
+  test "return 3+2==5*7", state do
+    code = """
+    int main() {
+    return 3+2==5*7;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens69]
+  end
+
+  test "return 3==/9", state do
+    code = """
+    int main() {
+    return 3==/9;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens70]
+  end
+
+  test "return 2+2||1*3", state do
+    code = """
+    int main() {
+    return 2+2||1*3;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens71]
+  end
+
+  test "return 5-2&&4/5", state do
+    code = """
+    int main() {
+    return 5-2&&4/5;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens72]
+  end
+
+  test "return 1+1<2+3", state do
+    code = """
+    int main() {
+    return 1+1<2+3;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens73]
+  end
+
+  test "return 7+5<=4*2*1", state do
+    code = """
+    int main() {
+    return 7+5<=4*2*1;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens74]
+  end
+
+  test "return 8->5", state do
+    code = """
+    int main() {
+    return 8->5;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+
+    assert Lexer.scan_words(s_code) == state[:tokens75]
+  end
+
+
 end
