@@ -2,6 +2,7 @@ defmodule CodeGenerator do
   def generate_code(ast) do
     if is_map(ast) do
       code = post_order(ast)
+      IO.puts(code)
       code
     else
       IO.inspect(ast)
@@ -16,12 +17,13 @@ defmodule CodeGenerator do
 
       ast_node ->
         code_snippet = post_order(ast_node.left_node)
-        post_order(ast_node.right_node)
-        emit_code(ast_node.node_name, code_snippet, ast_node.value)
+        code_snippet2 = post_order(ast_node.right_node)
+        emit_code(ast_node.node_name, code_snippet, code_snippet2, ast_node.value)
+
     end
   end
 
-  def emit_code(:program, code_snippet, _) do
+  def emit_code(:program, code_snippet, _, _) do
     """
         .section	.text.startup,"ax",@progbits
         .p2align 4
@@ -29,7 +31,7 @@ defmodule CodeGenerator do
       code_snippet
   end
 
-  def emit_code(:function, code_snippet, :main) do
+  def emit_code(:function, code_snippet, _, :main) do
     """
         .globl  main
     main:
@@ -38,7 +40,7 @@ defmodule CodeGenerator do
       code_snippet
   end
 
-  def emit_code(:return, code_snippet, _) do
+  def emit_code(:return, code_snippet, _, _) do
     code_snippet<>
     """
         ret
@@ -47,30 +49,199 @@ defmodule CodeGenerator do
     """
   end
 
-  def emit_code(:negation, code_snippet, _) do
+  def emit_code(:negation, code_snippet, nil, _) do
     code_snippet<>
     """
-        neg	%eax
+        neg	%rax
     """
   end
-  def emit_code(:bitwise_complement, code_snippet, _) do
+  def emit_code(:bitwise_complement, code_snippet, _, _) do
     code_snippet<>
     """
-        not	%eax
-    """
-  end
-  def emit_code(:logical_negation, code_snippet, _) do
-    code_snippet<>
-    """
-        cmpl     $0, %eax
-        movl     $0, %eax
-        sete     %al
+        not	%rax
     """
   end
 
-  def emit_code(:constant, _code_snippet, value) do
+  def emit_code(:logical_negation, code_snippet, _, _) do
+    code_snippet<>
     """
-        movl  $#{value}, %eax
+        cmp $0, %rax
+        mov $0, %rax
+        sete %al
     """
   end
+
+  def emit_code(:constant, _code_snippet, _, value) do
+    """
+        movq $#{value}, %rax
+    """
+  end
+
+  def emit_code(:addition, code_snippet, code_snippet2, _) do
+    code_snippet<>
+    """
+        pushq %rax
+    """
+    <>code_snippet2<>
+    """
+        popq %rcx
+        addq %rcx, %rax
+    """
+  end
+
+  def emit_code(:multiplication, code_snippet, code_snippet2, _) do
+    code_snippet<>
+    """
+        pushq %rax
+    """
+    <>code_snippet2<>
+    """
+        popq %rcx
+        imul %rcx, %rax
+    """
+  end
+
+  def emit_code(:negation, code_snippet, code_snippet2, _) do
+    code_snippet2<>
+    """
+        pushq %rax
+    """
+    <>code_snippet<>
+    """
+        popq %rcx
+        subq %rcx, %rax
+    """
+  end
+
+  def emit_code(:division, code_snippet, code_snippet2, _) do
+    code_snippet2<>
+    """
+        pushq %rax
+    """
+    <>code_snippet<>
+    """
+        popq %rcx
+        idiv %rcx
+    """
+  end
+
+  def emit_code(:equal, code_snippet, code_snippet2, _) do
+    code_snippet<>
+    """
+        pushq %rax
+    """
+    <>code_snippet2<>
+    """
+        popq %rcx
+        cmpq %rax, %rcx
+        mov $0, %rax
+        sete %al
+    """
+  end
+
+  def emit_code(:not_equal, code_snippet, code_snippet2, _) do
+    code_snippet<>
+    """
+        pushq %rax
+    """
+    <>code_snippet2<>
+    """
+        popq %rcx
+        cmpq %rax, %rcx
+        mov $0, %rax
+        setne %al
+    """
+  end
+
+  def emit_code(:greater_than_or_equal, code_snippet, code_snippet2, _) do
+    code_snippet<>
+    """
+        pushq %rax
+    """
+    <>code_snippet2<>
+    """
+        popq %rcx
+        cmpq %rax, %rcx
+        mov $0, %rax
+        setge %al
+    """
+  end
+
+  def emit_code(:less_than_or_equal, code_snippet, code_snippet2, _) do
+    code_snippet<>
+    """
+        pushq %rax
+    """
+    <>code_snippet2<>
+    """
+        popq %rcx
+        cmpq %rax, %rcx
+        mov $0, %rax
+        setle %al
+    """
+  end
+
+  def emit_code(:less_than, code_snippet, code_snippet2, _) do
+    code_snippet<>
+    """
+        pushq %rax
+    """
+    <>code_snippet2<>
+    """
+        popq %rcx
+        cmpq %rax, %rcx
+        mov $0, %rax
+        setl %al
+    """
+  end
+
+  def emit_code(:greater_than, code_snippet, code_snippet2, _) do
+    code_snippet<>
+    """
+        pushq %rax
+    """
+    <>code_snippet2<>
+    """
+        popq %rcx
+        cmpq %rax, %rcx
+        mov $0, %rax
+        setg %al
+    """
+  end
+
+  def emit_code(:or, code_snippet, code_snippet2, _) do
+    code_snippet<>
+    """
+        cmpl $0, %eax
+        je _clause2
+        movl $1, %eax
+        jmp _end
+        _clause2:
+    """
+    <>code_snippet2<>
+    """
+        cmpl $0, %eax
+        movl $0, %eax
+        setne %al
+        _end:
+    """
+  end
+
+  def emit_code(:and, code_snippet, code_snippet2, _) do
+    code_snippet<>
+    """
+        cmpl $0, %eax
+        jne _clause2
+        jmp _end
+        _clause2:
+    """
+    <>code_snippet2<>
+    """
+        cmpl $0, %eax
+        movl $0, %eax
+        setne %al
+        _end:
+    """
+  end
+
 end

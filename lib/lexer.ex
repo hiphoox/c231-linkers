@@ -34,6 +34,30 @@ defmodule Lexer do
         ";" <> rest ->
           {{:semicolon, code_line}, rest}
 
+        "&&" <> rest ->
+          {{:and, code_line}, rest}
+
+        "||" <> rest ->
+          {{:or, code_line}, rest}
+
+        "==" <> rest ->
+          {{:equal, code_line}, rest}
+
+        "!=" <> rest ->
+          {{:not_equal, code_line}, rest}
+
+        "<=" <> rest ->
+          {{:less_than_or_equal, code_line}, rest}
+
+        ">=" <> rest ->
+          {{:greater_than_or_equal, code_line}, rest}
+
+        ">" <> rest ->
+          {{:greater_than, code_line}, rest}
+
+        "<" <> rest ->
+          {{:less_than, code_line}, rest}
+
         "-" <> rest ->
           {{:negation, code_line}, rest}
 
@@ -63,6 +87,15 @@ defmodule Lexer do
         else
           {:error,{"Token not valid: #{program}",linea}}
         end
+
+        "+" <> rest ->
+          {{:addition, code_line}, rest}
+
+        "*" <> rest ->
+          {{:multiplication, code_line}, rest}
+
+        "/" <> rest ->
+          {{:division, code_line}, rest}
 
         rest ->
           get_constant(rest,linea)
