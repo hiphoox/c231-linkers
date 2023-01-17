@@ -13,7 +13,7 @@ defmodule NqccTest do
     #IO.puts(path_pruebas)
     #IO.puts(path_nqcc)
 
-    {out,n}=System.cmd(path_pruebas, [path_nqcc, "1", "2"], cd: dir_aux)
+    {out,n}=System.cmd(path_pruebas, [path_nqcc, "3", "4"], cd: dir_aux)
     IO.puts("\n\n====- Pruebas nivel sistema -====\n")
     IO.puts(out)
 

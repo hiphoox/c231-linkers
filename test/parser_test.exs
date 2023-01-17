@@ -552,5 +552,618 @@ test "con operadores en desorden", state do
 end
 
 
+#--------Pruebas parte 3-----------
+
+  test "falta constante en suma", state do
+
+    code = """
+    int main() {
+    return 2+;
+    }
+    """
+
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error17]
+  end
+
+  test "falta constante en multiplicacion", state do
+    code = """
+    int main() {
+    return 2*;
+    }
+    """
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error18]
+  end
+
+  test "falta constante en division", state do
+    code = """
+    int main() {
+    return 2/;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error19]
+  end
+
+  test "return 2-2", state do
+    code = """
+    int main() {
+    return 2-2;
+    }
+    """
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol7]
+  end
+
+  test "return 2+2", state do
+    code = """
+    int main() {
+    return 2+2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol8]
+  end
+
+  test "return 2*2", state do
+    code = """
+    int main() {
+    return 2*2;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol9]
+  end
+
+  test "return 2/2", state do
+    code = """
+    int main() {
+    return 2/2;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol10]
+  end
+
+  test "return 2-3+4", state do
+    code = """
+    int main() {
+    return 2-3+4;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol11]
+  end
+
+  test "return 2+3*4", state do
+    code = """
+    int main() {
+    return 2+3*4;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol12]
+  end
+
+  test "return 2/3+4", state do
+    code = """
+    int main() {
+    return 2/3+4;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol13]
+  end
+
+  test "return 2*3/4", state do
+    code = """
+    int main() {
+    return 2*3/4;
+    }
+    """
+s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol14]
+  end
+
+  test "return 2*3-4", state do
+    code = """
+    int main() {
+    return 2*3-4;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol15]
+  end
+
+  test "return 2/3-4", state do
+    code = """
+    int main() {
+    return 2/3-4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol16]
+  end
+
+  test "return 2/3-4*5", state do
+    code = """
+    int main() {
+    return 2/3-4*5;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol17]
+  end
+
+  test "return 2/3-4*5+6", state do
+    code = """
+    int main() {
+    return 2/3-4*5+6;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol18]
+  end
+
+  test "return 2-3-4", state do
+    code = """
+    int main() {
+    return 2-3-4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol19]
+  end
+
+  test "return 2+3+4", state do
+    code = """
+    int main() {
+    return 2+3+4;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol20]
+  end
+
+  test "return 2*3*4", state do
+    code = """
+    int main() {
+    return 2*3*4;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol21]
+  end
+
+  test "return 2/3/4", state do
+    code = """
+    int main() {
+    return 2/3/4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol22]
+  end
+
+  test "return 2++9-2/4", state do
+    code = """
+    int main() {
+      return 2++9-2/4;
+    }
+    """
+   s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error20]
+  end
+
+  test "return 7//9+4", state do
+    code = """
+    int main() {
+      return 7//9+4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error21]
+  end
+
+  test "return 2//3", state do
+    code = """
+    int main() {
+      return 2//3;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error22]
+  end
+
+  test "return 8**9", state do
+    code = """
+    int main() {
+      return 8**9;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error23]
+  end
+
+  test "return -2+9/7", state do
+    code = """
+    int main() {
+      return -2+9/7;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol23]
+  end
+
+  test "return ~-6+8*4", state do
+    code = """
+    int main() {
+      return ~-6+8*4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol24]
+  end
+
+  test "return 5-+/9*3", state do
+    code = """
+    int main() {
+      return 5-+/9*3;
+    }
+    """
+s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error24]
+  end
+
+  test "return /7/", state do
+    code = """
+    int main() {
+      return /7/;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error25]
+  end
+  test "return *9--", state do
+    code = """
+    int main() {
+      return *9--;
+    }
+    """
+s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error26]
+  end
+  test "return 2/-*+", state do
+    code = """
+    int main() {
+      return 2/-*+;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error27]
+  end
+  test "return 3/0", state do
+    code = """
+    int main() {
+      return 3/0;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error28]
+  end
+
+  test "return 0/5", state do
+    code = """
+    int main() {
+      return 0/5;
+    }
+    """
+   s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol25]
+  end
+
+  test "return ~+/--", state do
+    code = """
+    int main() {
+      return ~+/--;
+    }
+    """
+   s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error29]
+  end
+
+#------Pruebas parte 4---------
+
+  test "return and comparation &&", state do
+    code = """
+    int main() {
+    return 2&&2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol26]
+  end
+  test "return or comparation ||", state do
+    code = """
+    int main() {
+    return 2||2;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol27]
+  end
+  test "return equal comparation ==", state do
+    code = """
+    int main() {
+    return 2==2;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol28]
+  end
+  test "return not equal comparation !=", state do
+    code = """
+    int main() {
+    return 2!=2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol29]
+  end
+  test "return less equal comparation <=", state do
+    code = """
+    int main() {
+    return 2<=2;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol30]
+  end
+  test "return less comparation <", state do
+    code = """
+    int main() {
+    return 2<2;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol31]
+  end
+  test "return great equal comparation >=", state do
+    code = """
+    int main() {
+    return 2>=2;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol32]
+  end
+  test "return great comparation >", state do
+    code = """
+    int main() {
+    return 2>2;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol33]
+  end
+  test "return <7", state do
+    code = """
+    int main() {
+    return <7;
+    }
+    """
+   s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error30]
+  end
+
+  test "return &&", state do
+    code = """
+    int main() {
+    return &&;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error31]
+  end
+  test "return 8=>7", state do
+    code = """
+    int main() {
+    return 8=>7;
+    }
+    """
+   s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error32]
+  end
+
+  test "return 4=<5", state do
+    code = """
+    int main() {
+    return 4=<5;
+    }
+    """
+   s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error33]
+  end
+
+  test "return 7===3", state do
+    code = """
+    int main() {
+    return 7===3;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error34]
+  end
+
+  test "return 6=!9", state do
+    code = """
+    int main() {
+    return 6=!9;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error35]
+  end
+
+  test "return 7&2", state do
+    code = """
+    int main() {
+    return 7&2;
+    }
+    """
+   s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error36]
+  end
+
+  test "return 8|7", state do
+    code = """
+    int main() {
+    return 8|7;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error37]
+  end
+
+  test "return 1<<<9", state do
+    code = """
+    int main() {
+    return 1<<<9;
+    }
+    """
+   s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error38]
+  end
+
+  test "return 7||6==4&&1<2", state do
+    code = """
+    int main() {
+    return 7||6==4&&1<2;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol34]
+  end
+
+  test "return 5=4", state do
+    code = """
+    int main() {
+    return 5=4;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error39]
+  end
+
+  test "return -3<9", state do
+    code = """
+    int main() {
+    return -3<9;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol35]
+  end
+
+  test "return ~7||-6", state do
+    code = """
+    int main() {
+    return ~7||-6;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol36]
+  end
+
+  test "return --1>5", state do
+    code = """
+    int main() {
+    return --1>5;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol37]
+  end
+
+  test "return !4<=7", state do
+    code = """
+    int main() {
+    return !4<=7;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol38]
+  end
+
+  test "return 3+2==5*7", state do
+    code = """
+    int main() {
+    return 3+2==5*7;
+    }
+    """
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol39]
+  end
+
+  test "return 3==/9", state do
+    code = """
+    int main() {
+    return 3==/9;
+    }
+    """
+   s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error40]
+  end
+
+  test "return 2+2||1*3", state do
+    code = """
+    int main() {
+    return 2+2||1*3;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol40]
+  end
+
+  test "return 5-2&&4/5", state do
+    code = """
+    int main() {
+    return 5-2&&4/5;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol41]
+  end
+
+  test "return 1+1<2+3", state do
+    code = """
+    int main() {
+    return 1+1<2+3;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol42]
+  end
+
+  test "return 7+5<=4*2*1", state do
+    code = """
+    int main() {
+    return 7+5<=4*2*1;
+    }
+    """
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol43]
+  end
+
+  test "return 8->5", state do
+    code = """
+    int main() {
+    return 8->5;
+    }
+    """
+   s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error41]
+  end
 
  end

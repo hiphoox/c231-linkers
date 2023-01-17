@@ -2,7 +2,6 @@ defmodule CodeGenerator do
   def generate_code(ast) do
     if is_map(ast) do
       code = post_order(ast)
-      IO.puts(code)
       code
     else
       IO.inspect(ast)
@@ -65,7 +64,7 @@ defmodule CodeGenerator do
   def emit_code(:logical_negation, code_snippet, _, _) do
     code_snippet<>
     """
-        cmp $0, %rax
+        cmpq $0, %rax
         mov $0, %rax
         sete %al
     """
@@ -73,7 +72,7 @@ defmodule CodeGenerator do
 
   def emit_code(:constant, _code_snippet, _, value) do
     """
-        movq $#{value}, %rax
+        mov $#{value}, %rax
     """
   end
 
