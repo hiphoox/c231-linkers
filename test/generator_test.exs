@@ -337,6 +337,176 @@ defmodule GeneratorTest do
       |> CodeGenerator.generate_code() == state[:codigo11]
   end
 
+  test "return 2++9-2/4", state do
+    code = """
+    int main() {
+      return 2++9-2/4;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo18]
+  end
+
+  test "return 7//9+4", state do
+    code = """
+    int main() {
+      return 7//9+4;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo19]
+  end
+
+  test "return 2//3", state do
+    code = """
+    int main() {
+      return 2//3;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo20]
+  end
+
+  test "return 8**9", state do
+    code = """
+    int main() {
+      return 8**9;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo21]
+  end
+
+  test "return -2+9/7", state do
+    code = """
+    int main() {
+      return -2+9/7;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo22]
+  end
+
+  test "return ~-6+8*4", state do
+    code = """
+    int main() {
+      return ~-6+8*4;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo23]
+  end
+
+  test "return 5-+/9*3", state do
+    code = """
+    int main() {
+      return 5-+/9*3;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo24]
+  end
+
+  test "return /7/", state do
+    code = """
+    int main() {
+      return /7/;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo25]
+  end
+
+  test "return *9--", state do
+    code = """
+    int main() {
+      return *9--;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo26]
+  end
+
+  test "return 2/-*+", state do
+    code = """
+    int main() {
+      return 2/-*+;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo27]
+  end
+
+  test "return 3/0", state do
+    code = """
+    int main() {
+      return 3/0;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo28]
+  end
+
+  test "return 0/5", state do
+    code = """
+    int main() {
+      return 0/5;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo29]
+  end
+
+  test "return ~+/--", state do
+    code = """
+    int main() {
+      return ~+/--;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo30]
+  end
+
+
   #------ Pruebas parte 4 -------
 
 
@@ -417,6 +587,294 @@ defmodule GeneratorTest do
       |> Parser.parse_program()
       |> CodeGenerator.generate_code() == state[:codigo17]
   end
+
+  test "return <7", state do
+    code = """
+    int main() {
+    return <7;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo31]
+  end
+
+  test "return &&", state do
+    code = """
+    int main() {
+    return &&;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo32]
+  end
+
+  test "return 8=>7", state do
+    code = """
+    int main() {
+    return 8=>7;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo33]
+  end
+
+  test "return 4=<5", state do
+    code = """
+    int main() {
+    return 4=<5;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo34]
+  end
+
+  test "return 7===3", state do
+    code = """
+    int main() {
+    return 7===3;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo35]
+  end
+
+  test "return 6=!9", state do
+    code = """
+    int main() {
+    return 6=!9;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo36]
+  end
+
+  test "return 7&2", state do
+    code = """
+    int main() {
+    return 7&2;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo37]
+  end
+
+  test "return 8|7", state do
+    code = """
+    int main() {
+    return 8|7;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo38]
+  end
+
+  test "return 1<<<9", state do
+    code = """
+    int main() {
+    return 1<<<9;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo39]
+  end
+
+  test "return 7||6==4&&1<2", state do
+    code = """
+    int main() {
+    return 7||6==4&&1<2;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo40]
+  end
+
+  test test "return 5=4", state do
+    code = """
+    int main() {
+    return 5=4;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo41]
+  end
+
+  test "return -3<9", state do
+    code = """
+    int main() {
+    return -3<9;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo42]
+  end
+
+  test "return ~7||-6", state do
+    code = """
+    int main() {
+    return ~7||-6;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo43]
+  end
+
+  test "return --1>5", state do
+    code = """
+    int main() {
+    return --1>5;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo44]
+  end
+
+  test "return !4<=7", state do
+    code = """
+    int main() {
+    return !4<=7;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo45]
+  end
+
+  test "return 3+2==5*7", state do
+    code = """
+    int main() {
+    return 3+2==5*7;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo46]
+  end
+
+  test "return 3==/9", state do
+    code = """
+    int main() {
+    return 3==/9;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo47]
+  end
+
+  test "return 2+2||1*3", state do
+    code = """
+    int main() {
+    return 2+2||1*3;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo48]
+  end
+
+  test "return 5-2&&4/5", state do
+    code = """
+    int main() {
+    return 5-2&&4/5;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo49]
+  end
+
+  test "return 1+1<2+3", state do
+    code = """
+    int main() {
+    return 1+1<2+3;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo50]
+  end
+
+  test "return 7+5<=4*2*1", state do
+    code = """
+    int main() {
+    return 7+5<=4*2*1;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo51]
+  end
+
+  test "return 8->5", state do
+    code = """
+    int main() {
+    return 8->5;
+    }
+    """
+    assert code
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.parse_program()
+      |> CodeGenerator.generate_code() == state[:codigo52]
+  end
+
+
 
 
 
