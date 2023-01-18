@@ -3,132 +3,48 @@ defmodule GeneratorTest do
   doctest CodeGenerator
 
   setup_all do
-    {:ok, #return 2
+    {:ok,
     codigo0: """
         .section	.text.startup,"ax",@progbits
         .p2align 4
         .globl  main
     main:
         endbr64
-        movl  $2, %eax
+        mov $2, %rax
         ret
         .section	.note.GNU-stack,"",@progbits
 
-    """, #return 100
+    """,
     codigo1: """
         .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $100, %eax\n    ret
-        .section	.note.GNU-stack,"",@progbits
+    main:\n    endbr64\n    mov $100, %rax\n    ret\n    .section	.note.GNU-stack,"",@progbits
 
-    """, #return 0
+    """,
     codigo2: """
         .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $0, %eax\n    ret
-        .section	.note.GNU-stack,"",@progbits
+    main:\n    endbr64\n    mov $0, %rax\n    ret\n    .section	.note.GNU-stack,"",@progbits
 
-    """, #return -2
-    codigo3: """
-        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $2, %eax\n    neg	%eax\n    ret
-        .section	.note.GNU-stack,"",@progbits
+    """,
+    unitary1: """
+        .section\t.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main\nmain:\n    endbr64\n    mov $7, %rax\n    not\t%rax\n    ret\n    .section\t.note.GNU-stack,"",@progbits
 
-    """,  #return ~2
-    codigo4: """
-        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $2, %eax\n    not	%eax\n    ret
-        .section	.note.GNU-stack,"",@progbits
+    """,
+    unitary2: """
+        .section\t.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main\nmain:\n    endbr64\n    mov $3, %rax\n    cmpq $0, %rax\n    mov $0, %rax\n    sete %al\n    cmpq $0, %rax\n    mov $0, %rax\n    sete %al\n    not\t%rax\n    cmpq $0, %rax\n    mov $0, %rax\n    sete %al\n    neg\t%rax\n    neg\t%rax\n    ret\n    .section\t.note.GNU-stack,"",@progbits
 
-    """, #return !2
-    codigo5: """
-        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $2, %eax\n    cmpl     $0, %eax\n    movl     $0, %eax
-        sete     %al\n    ret
-        .section	.note.GNU-stack,"",@progbits
+    """,
+    binary1: """
+        .section\t.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main\nmain:\n    endbr64\n    mov $2, %rax\n    pushq %rax\n    mov $3, %rax\n    popq %rcx\n    addq %rcx, %rax\n    ret\n    .section\t.note.GNU-stack,"",@progbits
 
-    """, #return -~!2
-    codigo6: """
-        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $2, %eax\n    cmpl     $0, %eax\n    movl     $0, %eax
-        sete     %al\n    not	%eax\n    neg	%eax\n    ret
-        .section	.note.GNU-stack,"",@progbits
+    """,
+    binary2: """
+        .section\t.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main\nmain:\n    endbr64\n    mov $1, %rax\n    pushq %rax\n    mov $2, %rax\n    pushq %rax\n    mov $8, %rax\n    pushq %rax\n    mov $3, %rax\n    pushq %rax\n    mov $9, %rax\n    popq %rcx\n    imul %rcx, %rax\n    popq %rcx\n    idiv %rcx\n    popq %rcx\n    addq %rcx, %rax\n    popq %rcx\n    subq %rcx, %rax\n    ret\n    .section\t.note.GNU-stack,"",@progbits
 
-    """, #return !~-2
-    codigo7: """
-        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $2, %eax\n    neg	%eax\n    not	%eax
-        cmpl     $0, %eax\n    movl     $0, %eax\n    sete     %al\n    ret
-        .section	.note.GNU-stack,"",@progbits
-
-    """,#---return 2+2
-    codigo8:"""
-        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n  mov $2, %eax\n pop %ecx\n add %ecx, %eax\n ret
-       .section	.note.GNU-stack,"",@progbits
-
-    """,#---return 2*2
-    codigo9:"""
-        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n  mov $2, %eax\n pop %ecx\n imul %ecx, %eax\n ret
-       .section	.note.GNU-stack,"",@progbits
-
-    """,#---return 2-2
-    codigo10:"""
-        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n  mov $2, %eax\n pop %ecx\n sub %ecx, %eax\n ret
-       .section	.note.GNU-stack,"",@progbits
-
-    """,#---return 2/2
-    codigo11:"""
-        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n  cdq\n movl $2,%eax\n pop %ecx\n idivq %rcx\n ret
-       .section	.note.GNU-stack,"",@progbits
-
-    """,#---return 2==2
-    codigo12:"""
-        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n pop %ecx\n cmp %eax,%ecx\n mov $0,%eax\n sete %al ret
-       .section	.note.GNU-stack,"",@progbits
-
-    """,#---return 2!=2
-    codigo13:"""
-        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n movl $2,%eax\n pop %ecx\n cmp %eax,%ecx\n movl $0,%eax,setne %al\n ret
-       .section	.note.GNU-stack,"",@progbits
-
-    """,#---return 2<2
-    codigo14:"""
-        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n movl $2,%eax\n pop %ecx\n cmp %eax,%ecx\n movl $0,%eax,setl %al\n ret
-       .section	.note.GNU-stack,"",@progbits
-
-    """,#---return 2<=2
-    codigo15:"""
-        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n movl $2,%eax\n pop %ecx\n cmp %eax,%ecx\n movl $0,%eax,setle %al\n ret
-       .section	.note.GNU-stack,"",@progbits
-
-    """,#---return 2>2
-    codigo16:"""
-        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n movl $2,%eax\n pop %ecx\n cmp %eax,%ecx\n movl $0,%eax,setg %al\n ret
-       .section	.note.GNU-stack,"",@progbits
-
-    """#---return 2>=2
-    codigo17:"""
-        .section	.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main
-    main:\n    endbr64\n    movl  $2, %eax\n push %eax\n movl $2,%eax\n pop %ecx\n cmp %eax,%ecx\n movl $0,%eax,setge %al\n ret
-       .section	.note.GNU-stack,"",@progbits
+    """,
+    binary3: """
+        .section\t.text.startup,"ax",@progbits\n    .p2align 4\n    .globl  main\nmain:\n    endbr64\n    mov $1, %rax\n    pushq %rax\n    mov $8, %rax\n    popq %rcx\n    subq %rcx, %rax\n    pushq %rax\n    mov $2, %rax\n    pushq %rax\n    mov $3, %rax\n    pushq %rax\n    mov $9, %rax\n    popq %rcx\n    imul %rcx, %rax\n    popq %rcx\n    addq %rcx, %rax\n    popq %rcx\n    idiv %rcx\n    ret\n    .section\t.note.GNU-stack,"",@progbits
 
     """
-
-
-
-
-
-
-
-
-
     }
 
   end
@@ -193,11 +109,8 @@ defmodule GeneratorTest do
   end
 
   test "Saltos de linea", state do
-      assert "int\nmain\n()\n{return 2;}"
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() ==
+      assert "int\nmain\n()\n{return 2;}" |> Sanitizer.sanitize_source() |> Lexer.scan_words()
+      |> Parser.parse_program()|> CodeGenerator.generate_code() ==
       state[:codigo] or state[:codigo0]
   end
 
@@ -217,671 +130,43 @@ defmodule GeneratorTest do
       |> CodeGenerator.generate_code() == state[:codigo0]
   end
 
-  #------ Pruebas parte 2 -------
-  test "Operador negation", state do
-    code = """
-    int main() {
-      return -2;
-    }
-    """
-    assert code
+  test "operacion unitaria ", state do
+    assert "int  main (){return ~7;}"
       |> Sanitizer.sanitize_source()
       |> Lexer.scan_words()
       |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo3]
-  end
+      |> CodeGenerator.generate_code() == state[:unitary1]
+    end
 
-  test "Operador bitwise complement", state do
-    code = """
-    int main() {
-      return ~2;
-    }
-    """
-    assert code
+  test "con varios operadores unitarios", state do
+    assert "int  main (){return --!~!!3;}"
       |> Sanitizer.sanitize_source()
       |> Lexer.scan_words()
       |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo4]
-  end
+      |> CodeGenerator.generate_code() == state[:unitary2]
+     end
+  
+  test "operacion binaria", state do
+    assert "int  main(){return 2+3;}"
+        |> Sanitizer.sanitize_source()
+        |> Lexer.scan_words()
+        |> Parser.parse_program()
+        |> CodeGenerator.generate_code() == state[:binary1]
+      end
 
-  test "Operador logical negation", state do
-    code = """
-    int main() {
-      return !2;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo5]
-  end
+  test "operacion binaria sin parentesis", state do
+    assert "int  main(){return 2+3*9/8-1;}"
+        |> Sanitizer.sanitize_source()
+        |> Lexer.scan_words()
+        |> Parser.parse_program()
+        |> CodeGenerator.generate_code() == state[:binary2]
+      end
 
-  test "Multiples operadores", state do
-    code = """
-    int main() {
-      return -~!2;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo6]
-  end
-
-  test "Multiples operadores 2", state do
-    code = """
-    int main() {
-      return !~-2;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo7]
-  end
-
-#------ Pruebas parte 3 -------
-
-  test "Suma 2+2", state do
-    code = """
-    int main() {
-      return 2+2;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo8]
-  end
-
-  test "Suma 2*2", state do
-    code = """
-    int main() {
-      return 2*2;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo9]
-  end
-
-  test "resta 2-2", state do
-    code = """
-    int main() {
-      return 2-2;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo10]
-  end
-
-  test "Division 2/2", state do
-    code = """
-    int main() {
-      return 2/2;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo11]
-  end
-
-  test "return 2++9-2/4", state do
-    code = """
-    int main() {
-      return 2++9-2/4;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo18]
-  end
-
-  test "return 7//9+4", state do
-    code = """
-    int main() {
-      return 7//9+4;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo19]
-  end
-
-  test "return 2//3", state do
-    code = """
-    int main() {
-      return 2//3;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo20]
-  end
-
-  test "return 8**9", state do
-    code = """
-    int main() {
-      return 8**9;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo21]
-  end
-
-  test "return -2+9/7", state do
-    code = """
-    int main() {
-      return -2+9/7;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo22]
-  end
-
-  test "return ~-6+8*4", state do
-    code = """
-    int main() {
-      return ~-6+8*4;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo23]
-  end
-
-  test "return 5-+/9*3", state do
-    code = """
-    int main() {
-      return 5-+/9*3;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo24]
-  end
-
-  test "return /7/", state do
-    code = """
-    int main() {
-      return /7/;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo25]
-  end
-
-  test "return *9--", state do
-    code = """
-    int main() {
-      return *9--;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo26]
-  end
-
-  test "return 2/-*+", state do
-    code = """
-    int main() {
-      return 2/-*+;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo27]
-  end
-
-  test "return 3/0", state do
-    code = """
-    int main() {
-      return 3/0;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo28]
-  end
-
-  test "return 0/5", state do
-    code = """
-    int main() {
-      return 0/5;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo29]
-  end
-
-  test "return ~+/--", state do
-    code = """
-    int main() {
-      return ~+/--;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo30]
-  end
-
-
-  #------ Pruebas parte 4 -------
-
-
-  test "Equal 2=2", state do
-    code = """
-    int main() {
-      return 2=2;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo12]
-  end
-
-  test "Not Equal 2!=2", state do
-    code = """
-    int main() {
-      return 2!=2;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo13]
-  end
-
-  test "Less 2<2", state do
-    code = """
-    int main() {
-      return 2<2;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo14]
-  end
-
-  test "Less equal 2<=2", state do
-    code = """
-    int main() {
-      return 2<=2;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo15]
-  end
-
-  test "Great 2>2", state do
-    code = """
-    int main() {
-      return 2>2;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo16]
-  end
-
-  test "Great Equal 2>=2", state do
-    code = """
-    int main() {
-      return 2>=2;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo17]
-  end
-
-  test "return <7", state do
-    code = """
-    int main() {
-    return <7;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo31]
-  end
-
-  test "return &&", state do
-    code = """
-    int main() {
-    return &&;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo32]
-  end
-
-  test "return 8=>7", state do
-    code = """
-    int main() {
-    return 8=>7;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo33]
-  end
-
-  test "return 4=<5", state do
-    code = """
-    int main() {
-    return 4=<5;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo34]
-  end
-
-  test "return 7===3", state do
-    code = """
-    int main() {
-    return 7===3;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo35]
-  end
-
-  test "return 6=!9", state do
-    code = """
-    int main() {
-    return 6=!9;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo36]
-  end
-
-  test "return 7&2", state do
-    code = """
-    int main() {
-    return 7&2;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo37]
-  end
-
-  test "return 8|7", state do
-    code = """
-    int main() {
-    return 8|7;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo38]
-  end
-
-  test "return 1<<<9", state do
-    code = """
-    int main() {
-    return 1<<<9;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo39]
-  end
-
-  test "return 7||6==4&&1<2", state do
-    code = """
-    int main() {
-    return 7||6==4&&1<2;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo40]
-  end
-
-  test test "return 5=4", state do
-    code = """
-    int main() {
-    return 5=4;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo41]
-  end
-
-  test "return -3<9", state do
-    code = """
-    int main() {
-    return -3<9;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo42]
-  end
-
-  test "return ~7||-6", state do
-    code = """
-    int main() {
-    return ~7||-6;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo43]
-  end
-
-  test "return --1>5", state do
-    code = """
-    int main() {
-    return --1>5;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo44]
-  end
-
-  test "return !4<=7", state do
-    code = """
-    int main() {
-    return !4<=7;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo45]
-  end
-
-  test "return 3+2==5*7", state do
-    code = """
-    int main() {
-    return 3+2==5*7;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo46]
-  end
-
-  test "return 3==/9", state do
-    code = """
-    int main() {
-    return 3==/9;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo47]
-  end
-
-  test "return 2+2||1*3", state do
-    code = """
-    int main() {
-    return 2+2||1*3;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo48]
-  end
-
-  test "return 5-2&&4/5", state do
-    code = """
-    int main() {
-    return 5-2&&4/5;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo49]
-  end
-
-  test "return 1+1<2+3", state do
-    code = """
-    int main() {
-    return 1+1<2+3;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo50]
-  end
-
-  test "return 7+5<=4*2*1", state do
-    code = """
-    int main() {
-    return 7+5<=4*2*1;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo51]
-  end
-
-  test "return 8->5", state do
-    code = """
-    int main() {
-    return 8->5;
-    }
-    """
-    assert code
-      |> Sanitizer.sanitize_source()
-      |> Lexer.scan_words()
-      |> Parser.parse_program()
-      |> CodeGenerator.generate_code() == state[:codigo52]
-  end
-
-
-
-
-
-
-
-
-
-
-
+  test "operacion binaria con parentesis", state do
+    assert "int  main(){return (2+3*9)/(8-1);}"
+        |> Sanitizer.sanitize_source()
+        |> Lexer.scan_words()
+        |> Parser.parse_program()
+        |> CodeGenerator.generate_code() == state[:binary3]
+      end
 end

@@ -232,11 +232,750 @@ defmodule ParserTest do
   right_node: nil,
   value: nil
 },
+arbol7: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        node_name: :negation,
+        right_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol8: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        node_name: :addition,
+        right_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+
+arbol9: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        node_name: :multiplication,
+        right_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol10: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        node_name: :division,
+        right_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 3
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol11: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 2
+          },
+          node_name: :negation,
+          right_node: %AST{
+            left_node: %AST{
+              left_node: %AST{
+                left_node: nil,
+                node_name: :constant,
+                right_node: nil,
+                value: 1
+              },
+              node_name: :multiplication,
+              right_node: %AST{
+                left_node: nil,
+                node_name: :constant,
+                right_node: nil,
+                value: 3
+              },
+              value: nil
+            },
+            node_name: :division,
+            right_node: %AST{
+              left_node: nil,
+              node_name: :constant,
+              right_node: nil,
+              value: 1
+            },
+            value: nil
+          },
+          value: nil
+        },
+        node_name: :addition,
+        right_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 4
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol12: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 2
+          },
+          node_name: :negation,
+          right_node: %AST{
+            left_node: %AST{
+              left_node: nil,
+              node_name: :constant,
+              right_node: nil,
+              value: 1
+            },
+            node_name: :multiplication,
+            right_node: %AST{
+              left_node: nil,
+              node_name: :constant,
+              right_node: nil,
+              value: 3
+            },
+            value: nil
+          },
+          value: nil
+        },
+        node_name: :division,
+        right_node: %AST{
+          left_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 1
+          },
+          node_name: :addition,
+          right_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 4
+          },
+          value: nil
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol13: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: %AST{
+            left_node: %AST{
+              left_node: %AST{
+                left_node: nil,
+                node_name: :constant,
+                right_node: nil,
+                value: 2
+              },
+              node_name: :multiplication,
+              right_node: %AST{
+                left_node: nil,
+                node_name: :constant,
+                right_node: nil,
+                value: 3
+              },
+              value: nil
+            },
+            node_name: :division,
+            right_node: %AST{
+              left_node: nil,
+              node_name: :constant,
+              right_node: nil,
+              value: 4
+            },
+            value: nil
+          },
+          node_name: :addition,
+          right_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 8
+          },
+          value: nil
+        },
+        node_name: :negation,
+        right_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 5
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol14: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 2
+          },
+          node_name: :negation,
+          right_node: nil,
+          value: nil
+        },
+        node_name: :addition,
+        right_node: %AST{
+          left_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 3
+          },
+          node_name: :logical_negation,
+          right_node: nil,
+          value: nil
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol15: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 3
+        },
+        node_name: :division,
+        right_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 0
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol16: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        node_name: :and,
+        right_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 7
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol17: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        node_name: :or,
+        right_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol18: %AST{left_node: %AST{left_node: %AST{left_node: %AST{left_node: %AST{left_node: nil, node_name: :constant, right_node: nil, value: 2}, node_name: :equal, right_node: %AST{left_node: nil, node_name: :constant, right_node: nil, value: 2}, value: nil}, node_name: :return, right_node: nil, value: nil}, node_name: :function, right_node: nil, value: :main}, node_name: :program, right_node: nil, value: nil},
+arbol19: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        node_name: :not_equal,
+        right_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol20: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        node_name: :less_than_or_equal,
+        right_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol21: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        node_name: :less_than,
+        right_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol22: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        node_name: :greater_than_or_equal,
+        right_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol23: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 2
+        },
+        node_name: :greater_than,
+        right_node: %AST{
+          left_node: nil,
+          node_name: :constant,
+          right_node: nil,
+          value: 9
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol24: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: %AST{
+            left_node: %AST{
+              left_node: %AST{
+                left_node: nil,
+                node_name: :constant,
+                right_node: nil,
+                value: 5
+              },
+              node_name: :equal,
+              right_node: %AST{
+                left_node: nil,
+                node_name: :constant,
+                right_node: nil,
+                value: 5
+              },
+              value: nil
+            },
+            node_name: :and,
+            right_node: %AST{
+              left_node: %AST{
+                left_node: nil,
+                node_name: :constant,
+                right_node: nil,
+                value: 1
+              },
+              node_name: :not_equal,
+              right_node: %AST{
+                left_node: nil,
+                node_name: :constant,
+                right_node: nil,
+                value: 0
+              },
+              value: nil
+            },
+            value: nil
+          },
+          node_name: :and,
+          right_node: %AST{
+            left_node: %AST{
+              left_node: nil,
+              node_name: :constant,
+              right_node: nil,
+              value: 4
+            },
+            node_name: :less_than_or_equal,
+            right_node: %AST{
+              left_node: nil,
+              node_name: :constant,
+              right_node: nil,
+              value: 6
+            },
+            value: nil
+          },
+          value: nil
+        },
+        node_name: :and,
+        right_node: %AST{
+          left_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 9
+          },
+          node_name: :greater_than_or_equal,
+          right_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 10
+          },
+          value: nil
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
+arbol25: %AST{
+  left_node: %AST{
+    left_node: %AST{
+      left_node: %AST{
+        left_node: %AST{
+          left_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 5
+          },
+          node_name: :less_than,
+          right_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 5
+          },
+          value: nil
+        },
+        node_name: :or,
+        right_node: %AST{
+          left_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 1
+          },
+          node_name: :greater_than,
+          right_node: %AST{
+            left_node: nil,
+            node_name: :constant,
+            right_node: nil,
+            value: 0
+          },
+          value: nil
+        },
+        value: nil
+      },
+      node_name: :return,
+      right_node: nil,
+      value: nil
+    },
+    node_name: :function,
+    right_node: nil,
+    value: :main
+  },
+  node_name: :program,
+  right_node: nil,
+  value: nil
+},
 
     tupla_error1: {:error, "Error: falta el tipo de valor de retorno", 1,:main_keyword},
     tupla_error2: {:error, "Archivo sin elementos",0,"--"},
-    tupla_error3: {:error, "Error: falta el punto y coma después de la constante para finalizar la declaración de devolución",
-                            2,:close_brace},
+    tupla_error3: {:error, "Error: falta el punto y coma después de la instruccion para finalizar la declaración de retorno", 2, :close_brace},
     tupla_error4: {:error, "Error: falta la función principal main",1,:return_keyword},
     tupla_error5: {:error, "Error: falta el paréntesis abierto",1,:close_paren},
     tupla_error6: {:error, "Error: falta el paréntesis de cierre", 2, {:constant, 2}},
@@ -245,11 +984,22 @@ defmodule ParserTest do
     tupla_error9: {:error, "Error: falta la llave abierta", 2, :return_keyword},
     tupla_error10: {:error, "Error: falta la llave de cierre",1,:open_brace},
     tupla_error11: {:error, "Error: falta la palabra clave 'return'", 2, {:constant, 2}},
-    tupla_error12: {:error, "Error: falta el valor de la constante", 2, :semicolon},
-    tupla_error13: {:error, "Error: falta el punto y coma después de la constante para finalizar la declaración de devolución", 2, :logical_negation},
-    tupla_error14: {:error, "Error: falta el punto y coma después de la constante para finalizar la declaración de devolución", 2, :logical_negation},
-    tupla_error15: {:error, "Error: falta el valor de la constante", 2, :semicolon},
-    tupla_error16: {:error, "Error: falta la llave abierta", 1, :negation}
+    tupla_error12: {:error, "Error: La expresión del retorno es incorrecta", 2, :semicolon},
+    tupla_error13: {:error, "Error: falta el punto y coma después de la instruccion para finalizar la declaración de retorno", 2, :logical_negation},
+    tupla_error14: {:error, "Error: falta el punto y coma después de la instruccion para finalizar la declaración de retorno", 2, :logical_negation},
+    tupla_error15: {:error, "Error: La expresión del retorno es incorrecta", 2, :semicolon},
+    tupla_error16: {:error, "Error: falta la llave abierta", 1, :negation},
+    tupla_error17: {:error, "Error: La expresión del retorno es incorrecta", 2, :semicolon},
+    tupla_error18: {:error, "Error: La expresión del retorno es incorrecta", 2, :multiplication},
+    tupla_error19: {:error, "Error: La expresión del retorno es incorrecta", 2, :division},
+    tupla_error20: {:error, "Error: La expresión del retorno es incorrecta", 2, :division},
+    tupla_error21: {:error, "Error: falta el punto y coma después de la instruccion para finalizar la declaración de retorno", {"Token not valid: =>7;", 2}, :error},
+    tupla_error22: {:error, "Error: falta el punto y coma después de la instruccion para finalizar la declaración de retorno", {"Token not valid: =<5;", 2}, :error},
+    tupla_error23: {:error, "Error: falta el punto y coma después de la instruccion para finalizar la declaración de retorno", {"Token not valid: =!9;", 2}, :error},
+    tupla_error24: {:error, "Error: falta el punto y coma después de la instruccion para finalizar la declaración de retorno", {"Token not valid: &2;", 2}, :error},
+    tupla_error25: {:error, "Error: falta el punto y coma después de la instruccion para finalizar la declaración de retorno", {"Token not valid: |7;", 2}, :error},
+    tupla_error26: {:error, "Error: La expresión del retorno es incorrecta", 2, :less_than},
+    tupla_error27: {:error, "Error: falta el punto y coma después de la instruccion para finalizar la declaración de retorno", {"Token not valid: =4;", 2}, :error}
   }
   end
 
@@ -551,42 +1301,9 @@ test "con operadores en desorden", state do
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error16]
 end
 
-
 #--------Pruebas parte 3-----------
 
-  test "falta constante en suma", state do
-
-    code = """
-    int main() {
-    return 2+;
-    }
-    """
-
-    s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error17]
-  end
-
-  test "falta constante en multiplicacion", state do
-    code = """
-    int main() {
-    return 2*;
-    }
-    """
-    s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error18]
-  end
-
-  test "falta constante en division", state do
-    code = """
-    int main() {
-    return 2/;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error19]
-  end
-
-  test "return 2-2", state do
+    test "resta", state do
     code = """
     int main() {
     return 2-2;
@@ -596,574 +1313,302 @@ end
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol7]
   end
 
-  test "return 2+2", state do
+  test "suma", state do
     code = """
     int main() {
     return 2+2;
     }
     """
-  s_code = Sanitizer.sanitize_source(code)
+    s_code = Sanitizer.sanitize_source(code)
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol8]
   end
 
-  test "return 2*2", state do
+  test "multiplicacion", state do
     code = """
     int main() {
     return 2*2;
     }
     """
- s_code = Sanitizer.sanitize_source(code)
+     s_code = Sanitizer.sanitize_source(code)
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol9]
   end
 
-  test "return 2/2", state do
+  test "division", state do
     code = """
     int main() {
-    return 2/2;
+    return 2/3;
     }
     """
- s_code = Sanitizer.sanitize_source(code)
+     s_code = Sanitizer.sanitize_source(code)
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol10]
   end
 
-  test "return 2-3+4", state do
+  test "falta constante en operacion binaria", state do
     code = """
     int main() {
-    return 2-3+4;
+    return 2+;
     }
     """
- s_code = Sanitizer.sanitize_source(code)
+
+    s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error17]
+  
+  end 
+
+  test "opraciones binarias sin parentesis", state do
+    code = """
+    int main() {
+    return 2-1*3/1+4;
+    }
+    """
+      s_code = Sanitizer.sanitize_source(code)
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol11]
   end
 
-  test "return 2+3*4", state do
+  test "opracion binaria con parentesis", state do
     code = """
     int main() {
-    return 2+3*4;
+    return (2-1*3)/(1+4);
     }
     """
- s_code = Sanitizer.sanitize_source(code)
+      s_code = Sanitizer.sanitize_source(code)
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol12]
   end
 
-  test "return 2/3+4", state do
+  test "con todos los operadores", state do
     code = """
     int main() {
-    return 2/3+4;
+    return 2*3/4+8-5;
     }
     """
- s_code = Sanitizer.sanitize_source(code)
+     s_code = Sanitizer.sanitize_source(code)
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol13]
   end
 
-  test "return 2*3/4", state do
+
+  test "opracion binaria y unaria", state do
     code = """
     int main() {
-    return 2*3/4;
+    return (-2)+(!3);
     }
     """
-s_code = Sanitizer.sanitize_source(code)
+      s_code = Sanitizer.sanitize_source(code)
     assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol14]
   end
 
-  test "return 2*3-4", state do
-    code = """
-    int main() {
-    return 2*3-4;
-    }
-    """
- s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol15]
-  end
 
-  test "return 2/3-4", state do
-    code = """
-    int main() {
-    return 2/3-4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol16]
-  end
-
-  test "return 2/3-4*5", state do
-    code = """
-    int main() {
-    return 2/3-4*5;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol17]
-  end
-
-  test "return 2/3-4*5+6", state do
-    code = """
-    int main() {
-    return 2/3-4*5+6;
-    }
-    """
- s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol18]
-  end
-
-  test "return 2-3-4", state do
-    code = """
-    int main() {
-    return 2-3-4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol19]
-  end
-
-  test "return 2+3+4", state do
-    code = """
-    int main() {
-    return 2+3+4;
-    }
-    """
- s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol20]
-  end
-
-  test "return 2*3*4", state do
-    code = """
-    int main() {
-    return 2*3*4;
-    }
-    """
- s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol21]
-  end
-
-  test "return 2/3/4", state do
-    code = """
-    int main() {
-    return 2/3/4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol22]
-  end
-
-  test "return 2++9-2/4", state do
-    code = """
-    int main() {
-      return 2++9-2/4;
-    }
-    """
-   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error20]
-  end
-
-  test "return 7//9+4", state do
-    code = """
-    int main() {
-      return 7//9+4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error21]
-  end
-
-  test "return 2//3", state do
-    code = """
-    int main() {
-      return 2//3;
-    }
-    """
- s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error22]
-  end
-
-  test "return 8**9", state do
+  test "repeticion de un operador binario", state do
     code = """
     int main() {
       return 8**9;
     }
     """
   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error23]
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error18]
   end
 
-  test "return -2+9/7", state do
-    code = """
-    int main() {
-      return -2+9/7;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol23]
-  end
 
-  test "return ~-6+8*4", state do
-    code = """
-    int main() {
-      return ~-6+8*4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol24]
-  end
-
-  test "return 5-+/9*3", state do
-    code = """
-    int main() {
-      return 5-+/9*3;
-    }
-    """
-s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error24]
-  end
-
-  test "return /7/", state do
+  test "opracion binaria incompleta", state do
     code = """
     int main() {
       return /7/;
     }
     """
   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error25]
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error19]
   end
-  test "return *9--", state do
-    code = """
-    int main() {
-      return *9--;
-    }
-    """
-s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error26]
-  end
-  test "return 2/-*+", state do
-    code = """
-    int main() {
-      return 2/-*+;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error27]
-  end
-  test "return 3/0", state do
+  
+  test "division entre cero", state do
     code = """
     int main() {
       return 3/0;
     }
     """
+     s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol15]
+  end
+
+
+  test "oprador binario sin constantes", state do
+    code = """
+    int main() {
+      return /;
+    }
+    """
   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error28]
-  end
-
-  test "return 0/5", state do
-    code = """
-    int main() {
-      return 0/5;
-    }
-    """
-   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol25]
-  end
-
-  test "return ~+/--", state do
-    code = """
-    int main() {
-      return ~+/--;
-    }
-    """
-   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error29]
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error20]
   end
 
 #------Pruebas parte 4---------
 
-  test "return and comparation &&", state do
+  test "operacion &&", state do
     code = """
     int main() {
-    return 2&&2;
+    return 2&&7;
     }
     """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol26]
+      s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol16]
   end
-  test "return or comparation ||", state do
+  test "operacion ||", state do
     code = """
     int main() {
     return 2||2;
     }
     """
- s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol27]
+      s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol17]
   end
-  test "return equal comparation ==", state do
+  test "operacion ==", state do
     code = """
     int main() {
     return 2==2;
     }
     """
- s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol28]
+      s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol18]
   end
-  test "return not equal comparation !=", state do
+  test "operacion !=", state do
     code = """
     int main() {
     return 2!=2;
     }
     """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol29]
+      s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol19]
   end
-  test "return less equal comparation <=", state do
+ 
+  test "operacion <=", state do
     code = """
     int main() {
     return 2<=2;
     }
     """
- s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol30]
+      s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol20]
   end
-  test "return less comparation <", state do
+  
+  test "operacion <", state do
     code = """
     int main() {
     return 2<2;
     }
     """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol31]
+     s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol21]
   end
-  test "return great equal comparation >=", state do
+  
+  test "opracion >=", state do
     code = """
     int main() {
     return 2>=2;
     }
     """
- s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol32]
+      s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol22]
   end
-  test "return great comparation >", state do
+  
+  test "operacion >", state do
     code = """
     int main() {
-    return 2>2;
+    return 2>9;
     }
     """
- s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol33]
-  end
-  test "return <7", state do
-    code = """
-    int main() {
-    return <7;
-    }
-    """
-   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error30]
+      s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol23]
   end
 
-  test "return &&", state do
-    code = """
-    int main() {
-    return &&;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error31]
-  end
-  test "return 8=>7", state do
+  test "Operador <= incorrecto", state do
     code = """
     int main() {
     return 8=>7;
     }
     """
-   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error32]
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error21]
   end
 
-  test "return 4=<5", state do
+  test "Operador >= incorrecto", state do
     code = """
     int main() {
     return 4=<5;
     }
     """
-   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error33]
-  end
-
-  test "return 7===3", state do
-    code = """
-    int main() {
-    return 7===3;
-    }
-    """
   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error34]
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error22]
   end
 
-  test "return 6=!9", state do
+  test "Operador != incorrecto", state do
     code = """
     int main() {
     return 6=!9;
     }
     """
   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error35]
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error23]
   end
 
-  test "return 7&2", state do
+  test "Operador && incorrecto", state do
     code = """
     int main() {
     return 7&2;
     }
     """
-   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error36]
+ s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error24]
   end
 
-  test "return 8|7", state do
+  test "Operador || incorrecto", state do
     code = """
     int main() {
     return 8|7;
     }
     """
   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error37]
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error25]
   end
 
-  test "return 1<<<9", state do
+  test "Operador < incorrecto", state do
     code = """
     int main() {
     return 1<<<9;
     }
     """
-   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error38]
+  s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error26]
   end
 
-  test "return 7||6==4&&1<2", state do
-    code = """
-    int main() {
-    return 7||6==4&&1<2;
-    }
-    """
- s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol34]
-  end
-
-  test "return 5=4", state do
+  test "Operador == incorrecto", state do
     code = """
     int main() {
     return 5=4;
     }
     """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error39]
-  end
-
-  test "return -3<9", state do
-    code = """
-    int main() {
-    return -3<9;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol35]
-  end
-
-  test "return ~7||-6", state do
-    code = """
-    int main() {
-    return ~7||-6;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol36]
-  end
-
-  test "return --1>5", state do
-    code = """
-    int main() {
-    return --1>5;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol37]
-  end
-
-  test "return !4<=7", state do
-    code = """
-    int main() {
-    return !4<=7;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol38]
-  end
-
-  test "return 3+2==5*7", state do
-    code = """
-    int main() {
-    return 3+2==5*7;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol39]
-  end
-
-  test "return 3==/9", state do
-    code = """
-    int main() {
-    return 3==/9;
-    }
-    """
-   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error40]
-  end
-
-  test "return 2+2||1*3", state do
-    code = """
-    int main() {
-    return 2+2||1*3;
-    }
-    """
  s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol40]
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error27]
   end
 
-  test "return 5-2&&4/5", state do
+  
+  test "con paréntesis y espacios entre operandos", state do
     code = """
     int main() {
-    return 5-2&&4/5;
+    return (5==5) && (1!=0) && (4<=6) && (9>=10);
     }
     """
- s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol41]
+      s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol24]
   end
 
-  test "return 1+1<2+3", state do
+   test "operacion binaria sin paréntesis", state do
     code = """
     int main() {
-    return 1+1<2+3;
+    return 5<5||1>0;
     }
     """
- s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol42]
+      s_code = Sanitizer.sanitize_source(code)
+    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol25]
   end
 
-  test "return 7+5<=4*2*1", state do
-    code = """
-    int main() {
-    return 7+5<=4*2*1;
-    }
-    """
- s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:arbol43]
-  end
 
-  test "return 8->5", state do
-    code = """
-    int main() {
-    return 8->5;
-    }
-    """
-   s_code = Sanitizer.sanitize_source(code)
-    assert Lexer.scan_words(s_code) |> Parser.parse_program() == state[:tupla_error41]
-  end
 
  end

@@ -177,394 +177,174 @@ defmodule LexerTest do
        {:semicolon, 2},
        {:close_brace, 3}
      ],
-     tokens13: [  #Comun
-       {:int_keyword, 1},
-       {:main_keyword, 1},
-       {:open_paren, 1},
-       {:close_paren, 1},
-       {:open_brace, 1},
-       {:return_keyword, 2},
-       {:error, {"Token not valid: +9;", 2}},
-       {:close_brace, 3}
-     ],
-     tokens14:  [ #Return con una sola constante
-      {:int_keyword, 1},
-      {:main_keyword, 1},
-      {:open_paren, 1},
-      {:close_paren, 1},
-      {:open_brace, 1},
-      {:return_keyword, 2},
-      {{:constant, 2}, 2},
-      {:error, {"Token not valid: +;", 2}},
-      {:close_brace, 3}
+     tokens13: [
+  {:int_keyword, 1},
+  {:main_keyword, 1},
+  {:open_paren, 1},
+  {:close_paren, 1},
+  {:open_brace, 1},
+  {:return_keyword, 2},
+  {{:constant, 5}, 2},
+  {:negation, 2},
+  {{:constant, 3}, 2},
+  {:semicolon, 2},
+  {:close_brace, 3}
     ],
-    tokens15:  [
-      {:int_keyword, 1},
-      {:main_keyword, 1},
-      {:open_paren, 1},
-      {:close_paren, 1},
-      {:open_brace, 1},
-      {:return_keyword, 2},
-      {{:constant, 2}, 2},
-      {:error, {"Token not valid: *;", 2}},
-      {:close_brace, 3}
-    ],
-    tokens16: [
-      {:int_keyword, 1},
-      {:main_keyword, 1},
-      {:open_paren, 1},
-      {:close_paren, 1},
-      {:open_brace, 1},
-      {:return_keyword, 2},
-      {{:constant, 2}, 2},
-      {:error, {"Token not valid: /;", 2}},
-      {:close_brace, 3}
-    ],
-    tokens17: [ #Resta
-      {:int_keyword, 1},
-      {:main_keyword, 1},
-      {:open_paren, 1},
-      {:close_paren, 1},
-      {:open_brace, 1},
-      {:return_keyword, 2},
-      {{:constant, 2}, 2},
-      {:negation, 2},
-      {{:constant, 2}, 2},
-      {:semicolon, 2},
-      {:close_brace, 3}
-    ],
-    tokens18: [ #Suma
-      {:int_keyword, 1},
-      {:main_keyword, 1},
-      {:open_paren, 1},
-      {:close_paren, 1},
-      {:open_brace, 1},
-      {:return_keyword, 2},
-      {{:constant, 2}, 2},
-      {:addition, 2},
-      {{:constant, 2}, 2},
-      {:semicolon, 2},
-      {:close_brace, 3}
-    ],
-    token19:[ #Multiplicacion
-      {:int_keyword, 1},
-      {:main_keyword, 1},
-      {:open_paren, 1},
-      {:close_paren, 1},
-      {:open_brace, 1},
-      {:return_keyword, 2},
-      {{:constant, 2}, 2},
-      {:multiplication, 2},
-      {{:constant, 2}, 2},
-      {:semicolon, 2},
-      {:close_brace, 3}
-    ],
-    token20:[ #Division
-      {:int_keyword, 1},
-      {:main_keyword, 1},
-      {:open_paren, 1},
-      {:close_paren, 1},
-      {:open_brace, 1},
-      {:return_keyword, 2},
-      {{:constant, 2}, 2},
-      {:division, 2},
-      {{:constant, 2}, 2},
-      {:semicolon, 2},
-      {:close_brace, 3}
-    ],
-    token21:[ #Combinado Resta y Suma
-      {:int_keyword, 1},
-      {:main_keyword, 1},
-      {:open_paren, 1},
-      {:close_paren, 1},
-      {:open_brace, 1},
-      {:return_keyword, 2},
-      {{:constant, 2}, 2},
-      {:negation, 2},
-      {{:constant, 3}, 2},
-      {:addition, 2},
-      {{:constant, 4}, 2},
-      {:semicolon, 2},
-      {:close_brace, 3}
-    ],
-    token22:[ #Combinado Suma y mutiplicacion
-      {:int_keyword, 1},
-      {:main_keyword, 1},
-      {:open_paren, 1},
-      {:close_paren, 1},
-      {:open_brace, 1},
-      {:return_keyword, 2},
-      {{:constant, 2}, 2},
-      {:addition, 2},
-      {{:constant, 3}, 2},
-      {:multiplication, 2},
-      {{:constant, 4}, 2},
-      {:semicolon, 2},
-      {:close_brace, 3}
-    ],
-    token23:[ #Combinado Suma y division
-      {:int_keyword, 1},
-      {:main_keyword, 1},
-      {:open_paren, 1},
-      {:close_paren, 1},
-      {:open_brace, 1},
-      {:return_keyword, 2},
-      {{:constant, 2}, 2},
-      {:division, 2},
-      {{:constant, 3}, 2},
-      {:addition, 2},
-      {{:constant, 4}, 2},
-      {:semicolon, 2},
-      {:close_brace, 3}
-    ],
-    token24:[ #Combinado multiplicacion y division
-      {:int_keyword, 1},
-      {:main_keyword, 1},
-      {:open_paren, 1},
-      {:close_paren, 1},
-      {:open_brace, 1},
-      {:return_keyword, 2},
-      {{:constant, 2}, 2},
-      {:multiplication, 2},
-      {{:constant, 3}, 2},
-      {:division, 2},
-      {{:constant, 4}, 2},
-      {:semicolon, 2},
-      {:close_brace, 3}
-    ],
-    token25:[ #Combinado multiplicacion y resta
-      {:int_keyword, 1},
-      {:main_keyword, 1},
-      {:open_paren, 1},
-      {:close_paren, 1},
-      {:open_brace, 1},
-      {:return_keyword, 2},
-      {{:constant, 2}, 2},
-      {:multiplication, 2},
-      {{:constant, 3}, 2},
-      {:negation, 2},
-      {{:constant, 4}, 2},
-      {:semicolon, 2},
-      {:close_brace, 3}
-    ],
-    token26:[ #Combinado division y resta
-      {:int_keyword, 1},
-      {:main_keyword, 1},
-      {:open_paren, 1},
-      {:close_paren, 1},
-      {:open_brace, 1},
-      {:return_keyword, 2},
-      {{:constant, 2}, 2},
-      {:division, 2},
-      {{:constant, 3}, 2},
-      {:negation, 2},
-      {{:constant, 4}, 2},
-      {:semicolon, 2},
-      {:close_brace, 3}
-    ],
-    token27:[ #Multioperacion con 3
-      {:int_keyword, 1},
-      {:main_keyword, 1},
-      {:open_paren, 1},
-      {:close_paren, 1},
-      {:open_brace, 1},
-      {:return_keyword, 2},
-      {{:constant, 2}, 2},
-      {:division, 2},
-      {{:constant, 3}, 2},
-      {:negation, 2},
-      {{:constant, 4}, 2},
-      {:multiplication, 2},
-      {{:constant, 5}, 2},
-      {:semicolon, 2},
-      {:close_brace, 3}
-    ],
-    token28:[ #Multioperacion con 4
-      {:int_keyword, 1},
-      {:main_keyword, 1},
-      {:open_paren, 1},
-      {:close_paren, 1},
-      {:open_brace, 1},
-      {:return_keyword, 2},
-      {{:constant, 2}, 2},
-      {:division, 2},
-      {{:constant, 3}, 2},
-      {:negation, 2},
-      {{:constant, 4}, 2},
-      {:multiplication, 2},
-      {{:constant, 5}, 2},
-      {:addition, 2},
-      {{:constant, 6}, 2},
-      {:semicolon, 2},
-      {:close_brace, 3}
-    ],
-    token29:[ #Multi Resta
-    {:int_keyword, 1},
-    {:main_keyword, 1},
-    {:open_paren, 1},
-    {:close_paren, 1},
-    {:open_brace, 1},
-    {:return_keyword, 2},
-    {{:constant, 2}, 2},
-    {:negation, 2},
-    {{:constant, 3}, 2},
-    {:negation, 2},
-    {{:constant, 4}, 2},
-    {:semicolon, 2},
-    {:close_brace, 3}
-  ],
-  token30:[ #Multi Suma
-    {:int_keyword, 1},
-    {:main_keyword, 1},
-    {:open_paren, 1},
-    {:close_paren, 1},
-    {:open_brace, 1},
-    {:return_keyword, 2},
-    {{:constant, 2}, 2},
-    {:addition, 2},
-    {{:constant, 3}, 2},
-    {:addition, 2},
-    {{:constant, 4}, 2},
-    {:semicolon, 2},
-    {:close_brace, 3}
-  ],
-  token31:[ #Multi Multiplicacion
-    {:int_keyword, 1},
-    {:main_keyword, 1},
-    {:open_paren, 1},
-    {:close_paren, 1},
-    {:open_brace, 1},
-    {:return_keyword, 2},
-    {{:constant, 2}, 2},
-    {:multiplication, 2},
-    {{:constant, 3}, 2},
-    {:multiplication, 2},
-    {{:constant, 4}, 2},
-    {:semicolon, 2},
-    {:close_brace, 3}
-  ],
-  token32:[ #Multi Division
-    {:int_keyword, 1},
-    {:main_keyword, 1},
-    {:open_paren, 1},
-    {:close_paren, 1},
-    {:open_brace, 1},
-    {:return_keyword, 2},
-    {{:constant, 2}, 2},
-    {:division, 2},
-    {{:constant, 3}, 2},
-    {:division, 2},
-    {{:constant, 4}, 2},
-    {:semicolon, 2},
-    {:close_brace, 3}
-  ],
-  token33:[ #And Comparation
-    {:int_keyword,1},
-    {:main_keyword,1},
-    {:open_paren,1},
-    {:close_paren,1},
-    {:open_brace,1},
-    {:return_keyword,2},
-    {{:constant, 2},2},
-    {:and,2},
-    {{:constant, 2},2},
-    {:semicolon,2},
-    {:close_brace,3}
-  ],
-  token34:[ #Or Comparation
-    {:int_keyword,1},
-    {:main_keyword,1},
-    {:open_paren,1},
-    {:close_paren,1},
-    {:open_brace,1},
-    {:return_keyword,2},
-    {{:constant, 2},2},
-    {:or,2},
-    {{:constant, 2},2},
-    {:semicolon,2},
-    {:close_brace,3}
-  ],
-  token35:[ #Equal Comparation
-    {:int_keyword,1},
-    {:main_keyword,1},
-    {:open_paren,1},
-    {:close_paren,1},
-    {:open_brace,1},
-    {:return_keyword,2},
-    {{:constant, 2},2},
-    {:equal,2},
-    {{:constant, 2},2},
-    {:semicolon,2},
-    {:close_brace,3}
-  ],
-  token36:[ #not equal Comparation
-    {:int_keyword,1},
-    {:main_keyword,1},
-    {:open_paren,1},
-    {:close_paren,1},
-    {:open_brace,1},
-    {:return_keyword,2},
-    {{:constant, 2},2},
-    {:notequal,2},
-    {{:constant, 2},2},
-    {:semicolon,2},
-    {:close_brace,3}
-  ],
-  token37:[ #less equal Comparation
-    {:int_keyword,1},
-    {:main_keyword,1},
-    {:open_paren,1},
-    {:close_paren,1},
-    {:open_brace,1},
-    {:return_keyword,2},
-    {{:constant, 2},2},
-    {:lessequal,2},
-    {{:constant, 2},2},
-    {:semicolon,2},
-    {:close_brace,3}
-  ],
-  token38:[ #less Comparation
-    {:int_keyword,1},
-    {:main_keyword,1},
-    {:open_paren,1},
-    {:close_paren,1},
-    {:open_brace,1},
-    {:return_keyword,2},
-    {{:constant, 2},2},
-    {:less,2},
-    {{:constant, 2},2},
-    {:semicolon,2},
-    {:close_brace,3}
-  ],
-  token39:[ #great equal Comparation
-    {:int_keyword,1},
-    {:main_keyword,1},
-    {:open_paren,1},
-    {:close_paren,1},
-    {:open_brace,1},
-    {:return_keyword,2},
-    {{:constant, 2},2},
-    {:greatequal,2},
-    {{:constant, 2},2},
-    {:semicolon,2},
-    {:close_brace,3}
-  ],
-  token40:[ #great Comparation
-    {:int_keyword,1},
-    {:main_keyword,1},
-    {:open_paren,1},
-    {:close_paren,1},
-    {:open_brace,1},
-    {:return_keyword,2},
-    {{:constant, 2},2},
-    {:great,2},
-    {{:constant, 2},2},
-    {:semicolon,2},
-    {:close_brace,3}
-  ]
-    }
-  end
-
+    tokens14: [
+  {:int_keyword, 1},
+  {:main_keyword, 1},
+  {:open_paren, 1},
+  {:close_paren, 1},
+  {:open_brace, 1},
+  {:return_keyword, 2},
+  {{:constant, 2}, 2},
+  {:addition, 2},
+  {{:constant, 2}, 2},
+  {:semicolon, 2},
+  {:close_brace, 3}
+],
+  tokens15: [
+  {:int_keyword, 1},
+  {:main_keyword, 1},
+  {:open_paren, 1},
+  {:close_paren, 1},
+  {:open_brace, 1},
+  {:return_keyword, 2},
+  {{:constant, 2}, 2},
+  {:multiplication, 2},
+  {{:constant, 2}, 2},
+  {:semicolon, 2},
+  {:close_brace, 3}
+],
+  tokens16: [
+  {:int_keyword, 1},
+  {:main_keyword, 1},
+  {:open_paren, 1},
+  {:close_paren, 1},
+  {:open_brace, 1},
+  {:return_keyword, 2},
+  {{:constant, 2}, 2},
+  {:division, 2},
+  {{:constant, 3}, 2},
+  {:semicolon, 2},
+  {:close_brace, 3}
+],
+  tokens17: [
+  int_keyword: 1,
+  main_keyword: 1,
+  open_paren: 1,
+  close_paren: 1,
+  open_brace: 1,
+  return_keyword: 2,
+  error: {"Token not valid: a+5;", 2},
+  close_brace: 3
+],
+  tokens18: [
+  {:int_keyword, 1},
+  {:main_keyword, 1},
+  {:open_paren, 1},
+  {:close_paren, 1},
+  {:open_brace, 1},
+  {:return_keyword, 2},
+  {{:constant, 2}, 2},
+  {:and, 2},
+  {{:constant, 7}, 2},
+  {:semicolon, 2},
+  {:close_brace, 3}
+],
+  tokens19: [
+  {:int_keyword, 1},
+  {:main_keyword, 1},
+  {:open_paren, 1},
+  {:close_paren, 1},
+  {:open_brace, 1},
+  {:return_keyword, 2},
+  {{:constant, 2}, 2},
+  {:or, 2},
+  {{:constant, 2}, 2},
+  {:semicolon, 2},
+  {:close_brace, 3}
+],
+  tokens20: [
+  {:int_keyword, 1},
+  {:main_keyword, 1},
+  {:open_paren, 1},
+  {:close_paren, 1},
+  {:open_brace, 1},
+  {:return_keyword, 2},
+  {{:constant, 2}, 2},
+  {:equal, 2},
+  {{:constant, 2}, 2},
+  {:semicolon, 2},
+  {:close_brace, 3}
+],
+  tokens21: [
+  {:int_keyword, 1},
+  {:main_keyword, 1},
+  {:open_paren, 1},
+  {:close_paren, 1},
+  {:open_brace, 1},
+  {:return_keyword, 2},
+  {{:constant, 2}, 2},
+  {:not_equal, 2},
+  {{:constant, 2}, 2},
+  {:semicolon, 2},
+  {:close_brace, 3}
+],
+  tokens22: [
+  {:int_keyword, 1},
+  {:main_keyword, 1},
+  {:open_paren, 1},
+  {:close_paren, 1},
+  {:open_brace, 1},
+  {:return_keyword, 2},
+  {{:constant, 2}, 2},
+  {:less_than_or_equal, 2},
+  {{:constant, 2}, 2},
+  {:semicolon, 2},
+  {:close_brace, 3}
+],
+  tokens23: [
+  {:int_keyword, 1},
+  {:main_keyword, 1},
+  {:open_paren, 1},
+  {:close_paren, 1},
+  {:open_brace, 1},
+  {:return_keyword, 2},
+  {{:constant, 2}, 2},
+  {:less_than, 2},
+  {{:constant, 2}, 2},
+  {:semicolon, 2},
+  {:close_brace, 3}
+],
+  tokens24: [
+  {:int_keyword, 1},
+  {:main_keyword, 1},
+  {:open_paren, 1},
+  {:close_paren, 1},
+  {:open_brace, 1},
+  {:return_keyword, 2},
+  {{:constant, 2}, 2},
+  {:greater_than_or_equal, 2},
+  {{:constant, 2}, 2},
+  {:semicolon, 2},
+  {:close_brace, 3}
+],
+  tokens25: [
+  {:int_keyword, 1},
+  {:main_keyword, 1},
+  {:open_paren, 1},
+  {:close_paren, 1},
+  {:open_brace, 1},
+  {:return_keyword, 2},
+  {{:constant, 2}, 2},
+  {:greater_than, 2},
+  {{:constant, 9}, 2},
+  {:semicolon, 2},
+  {:close_brace, 3}
+]
+  }
+end
 
   # tests to pass
   test "return 2", state do
@@ -924,13 +704,16 @@ defmodule LexerTest do
     state[:tokens9], 7, fn _ -> {:error, {"Token not valid: a;", 2}} end)
     expected_result = List.delete_at(expected_result, 8)
     assert Lexer.scan_words(s_code) == expected_result
-
+  
   end
 
-    test "operador unario no válido", state do
+#--------Pruebas parte 3-----------
+
+
+    test "resta", state do
     code = """
     int main() {
-    return +9;
+    return 5-3;
     }
     """
   s_code = Sanitizer.sanitize_source(code)
@@ -938,53 +721,7 @@ defmodule LexerTest do
     assert Lexer.scan_words(s_code) == state[:tokens13]
   end
 
-  #--------Pruebas parte 3-----------
-
-  test "falta constante en suma", state do
-    code = """
-    int main() {
-    return 2+;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens14]
-  end
-
-  test "falta constante en multiplicacion", state do
-    code = """
-    int main() {
-    return 2*;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens15]
-  end
-
-  test "falta constante en division", state do
-    code = """
-    int main() {
-    return 2/;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens16]
-  end
-
-  test "return 2-2", state do
-    code = """
-    int main() {
-    return 2-2;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens17]
-  end
-
-  test "return 2+2", state do
+  test "suma", state do
     code = """
     int main() {
     return 2+2;
@@ -992,10 +729,10 @@ defmodule LexerTest do
     """
   s_code = Sanitizer.sanitize_source(code)
 
-    assert Lexer.scan_words(s_code) == state[:tokens18]
+    assert Lexer.scan_words(s_code) == state[:tokens14]
   end
 
-  test "return 2*2", state do
+  test "multiplicacion", state do
     code = """
     int main() {
     return 2*2;
@@ -1003,626 +740,112 @@ defmodule LexerTest do
     """
   s_code = Sanitizer.sanitize_source(code)
 
-    assert Lexer.scan_words(s_code) == state[:tokens19]
+    assert Lexer.scan_words(s_code) == state[:tokens15]
   end
 
-  test "return 2/2", state do
+  test "division", state do
     code = """
     int main() {
-    return 2/2;
+    return 2/3;
     }
     """
   s_code = Sanitizer.sanitize_source(code)
 
-    assert Lexer.scan_words(s_code) == state[:tokens20]
+    assert Lexer.scan_words(s_code) == state[:tokens16]
   end
 
-  test "return 2-3+4", state do
+
+  test "operador binario y una constante", state do
     code = """
     int main() {
-    return 2-3+4;
+    return a+5;
     }
     """
   s_code = Sanitizer.sanitize_source(code)
 
-    assert Lexer.scan_words(s_code) == state[:tokens21]
+    assert Lexer.scan_words(s_code) == state[:tokens17]
   end
 
-  test "return 2+3*4", state do
-    code = """
-    int main() {
-    return 2+3*4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens22]
-  end
-
-  test "return 2/3+4", state do
-    code = """
-    int main() {
-    return 2/3+4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens23]
-  end
-
-  test "return 2*3/4", state do
-    code = """
-    int main() {
-    return 2*3/4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens24]
-  end
-
-  test "return 2*3-4", state do
-    code = """
-    int main() {
-    return 2*3-4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens25]
-  end
-
-  test "return 2/3-4", state do
-    code = """
-    int main() {
-    return 2/3-4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens26]
-  end
-
-  test "return 2/3-4*5", state do
-    code = """
-    int main() {
-    return 2/3-4*5;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens27]
-  end
-
-  test "return 2/3-4*5+6", state do
-    code = """
-    int main() {
-    return 2/3-4*5+6;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens28]
-  end
-
-  test "return 2-3-4", state do
-    code = """
-    int main() {
-    return 2-3-4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens29]
-  end
-
-  test "return 2+3+4", state do
-    code = """
-    int main() {
-    return 2+3+4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens30]
-  end
-
-  test "return 2*3*4", state do
-    code = """
-    int main() {
-    return 2*3*4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens31]
-  end
-
-  test "return 2/3/4", state do
-    code = """
-    int main() {
-    return 2/3/4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens32]
-  end
-
-  test "return 2++9-2/4", state do
-    code = """
-    int main() {
-      return 2++9-2/4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens41]
-  end
-
-  test "return 7//9+4", state do
-    code = """
-    int main() {
-      return 7//9+4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens42]
-  end
-
-  test "return 2//3", state do
-    code = """
-    int main() {
-      return 2//3;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens43]
-  end
-
-  test "return 8**9", state do
-    code = """
-    int main() {
-      return 8**9;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens44]
-  end
-
-  test "return -2+9/7", state do
-    code = """
-    int main() {
-      return -2+9/7;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens45]
-  end
-
-  test "return ~-6+8*4", state do
-    code = """
-    int main() {
-      return ~-6+8*4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens46]
-  end
-
-  test "return 5-+/9*3", state do
-    code = """
-    int main() {
-      return 5-+/9*3;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens47]
-  end
-
-  test "return /7/", state do
-    code = """
-    int main() {
-      return /7/;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens48]
-  end
-
-  test "return *9--", state do
-    code = """
-    int main() {
-      return *9--;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens49]
-  end
-
-  test "return 2/-*+", state do
-    code = """
-    int main() {
-      return 2/-*+;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens50]
-  end
-
-  test "return 3/0", state do
-    code = """
-    int main() {
-      return 3/0;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens51]
-  end
-
-  test "return 0/5", state do
-    code = """
-    int main() {
-      return 0/5;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens52]
-  end
-
-  test "return ~+/--", state do
-    code = """
-    int main() {
-      return ~+/--;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens53]
-  end
 
 #------Pruebas parte 4---------
 
-  test "return and comparation &&", state do
+  test "operacion &&", state do
     code = """
     int main() {
-    return 2&&2;
+    return 2&&7;
     }
     """
   s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens33]
+    assert Lexer.scan_words(s_code) == state[:tokens18]
   end
-
-  test "return or comparation ||", state do
+  test "operacion ||", state do
     code = """
     int main() {
     return 2||2;
     }
     """
   s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens34]
+    assert Lexer.scan_words(s_code) == state[:tokens19]
   end
-
-  test "return equal comparation ==", state do
+  test "operacion ==", state do
     code = """
     int main() {
     return 2==2;
     }
     """
   s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens35]
+    assert Lexer.scan_words(s_code) == state[:tokens20]
   end
-
-  test "return not equal comparation !=", state do
+  test "operacion !=", state do
     code = """
     int main() {
     return 2!=2;
     }
     """
   s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens36]
+    assert Lexer.scan_words(s_code) == state[:tokens21]
   end
-
-  test "return less equal comparation <=", state do
+ 
+  test "operacion <=", state do
     code = """
     int main() {
     return 2<=2;
     }
     """
   s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens37]
+    assert Lexer.scan_words(s_code) == state[:tokens22]
   end
-
-  test "return less comparation <", state do
+  
+  test "operacion <", state do
     code = """
     int main() {
     return 2<2;
     }
     """
   s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens38]
+    assert Lexer.scan_words(s_code) == state[:tokens23]
   end
-
-  test "return great equal comparation >=", state do
+  
+  test "opracion >=", state do
     code = """
     int main() {
     return 2>=2;
     }
     """
   s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens39]
+    assert Lexer.scan_words(s_code) == state[:tokens24]
   end
-
-  test "return great comparation >", state do
+  
+  test "operacion >", state do
     code = """
     int main() {
-    return 2>2;
+    return 2>9;
     }
     """
   s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens40]
+    assert Lexer.scan_words(s_code) == state[:tokens25]
   end
 
-  test "return <7", state do
-    code = """
-    int main() {
-    return <7;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens54]
-  end
-
-  test "return &&", state do
-    code = """
-    int main() {
-    return &&;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens55]
-  end
-
-  test "return 8=>7", state do
-    code = """
-    int main() {
-    return 8=>7;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens56]
-  end
-
-  test "return 4=<5", state do
-    code = """
-    int main() {
-    return 4=<5;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens57]
-  end
-
-  test "return 7===3", state do
-    code = """
-    int main() {
-    return 7===3;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens58]
-  end
-
-  test "return 6=!9", state do
-    code = """
-    int main() {
-    return 6=!9;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens59]
-  end
-
-  test "return 7&2", state do
-    code = """
-    int main() {
-    return 7&2;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens60]
-  end
-
-  test "return 8|7", state do
-    code = """
-    int main() {
-    return 8|7;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens61]
-  end
-
-  test "return 1<<<9", state do
-    code = """
-    int main() {
-    return 1<<<9;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens62]
-  end
-
-  test "return 7||6==4&&1<2", state do
-    code = """
-    int main() {
-    return 7||6==4&&1<2;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens63]
-  end
-
-  test "return 5=4", state do
-    code = """
-    int main() {
-    return 5=4;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens64]
-  end
-
-  test "return -3<9", state do
-    code = """
-    int main() {
-    return -3<9;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens65]
-  end
-
-  test "return ~7||-6", state do
-    code = """
-    int main() {
-    return ~7||-6;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens66]
-  end
-
-  test "return --1>5", state do
-    code = """
-    int main() {
-    return --1>5;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens67]
-  end
-
-  test "return !4<=7", state do
-    code = """
-    int main() {
-    return !4<=7;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens68]
-  end
-
-  test "return 3+2==5*7", state do
-    code = """
-    int main() {
-    return 3+2==5*7;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens69]
-  end
-
-  test "return 3==/9", state do
-    code = """
-    int main() {
-    return 3==/9;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens70]
-  end
-
-  test "return 2+2||1*3", state do
-    code = """
-    int main() {
-    return 2+2||1*3;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens71]
-  end
-
-  test "return 5-2&&4/5", state do
-    code = """
-    int main() {
-    return 5-2&&4/5;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens72]
-  end
-
-  test "return 1+1<2+3", state do
-    code = """
-    int main() {
-    return 1+1<2+3;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens73]
-  end
-
-  test "return 7+5<=4*2*1", state do
-    code = """
-    int main() {
-    return 7+5<=4*2*1;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens74]
-  end
-
-  test "return 8->5", state do
-    code = """
-    int main() {
-    return 8->5;
-    }
-    """
-  s_code = Sanitizer.sanitize_source(code)
-
-    assert Lexer.scan_words(s_code) == state[:tokens75]
-  end
-
+ 
 
 end
