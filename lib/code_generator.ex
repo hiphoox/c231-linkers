@@ -209,37 +209,43 @@ defmodule CodeGenerator do
   end
 
   def emit_code(:or, code_snippet, code_snippet2, _) do
+    n = Enum.random(1..2_000)
+    clause = Enum.random(1..2_000)
+
     code_snippet<>
     """
         cmpl $0, %eax
-        je _clause2
+        je _clause#{clause}
         movl $1, %eax
-        jmp _end
-        _clause2:
+        jmp _end#{n}
+        _clause#{clause}:
     """
     <>code_snippet2<>
     """
         cmpl $0, %eax
         movl $0, %eax
         setne %al
-        _end:
+        _end#{n}:
     """
   end
 
   def emit_code(:and, code_snippet, code_snippet2, _) do
+    n = Enum.random(1..2_000)
+    clause = Enum.random(1..2_000)
+
     code_snippet<>
     """
         cmpl $0, %eax
-        jne _clause2
-        jmp _end
-        _clause2:
+        jne _clause#{clause}
+        jmp _end#{n}
+        _clause#{clause}:
     """
     <>code_snippet2<>
     """
         cmpl $0, %eax
         movl $0, %eax
         setne %al
-        _end:
+        _end#{n}:
     """
   end
 
